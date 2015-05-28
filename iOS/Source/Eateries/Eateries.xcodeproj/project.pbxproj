@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		1F3D018D1B17613E00E9B59E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3D018C1B17613E00E9B59E /* AppDelegate.swift */; };
-		1F3D018F1B17613E00E9B59E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3D018E1B17613E00E9B59E /* ViewController.swift */; };
 		1F3D01921B17613E00E9B59E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F3D01901B17613E00E9B59E /* Main.storyboard */; };
 		1F3D01941B17613E00E9B59E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F3D01931B17613E00E9B59E /* Images.xcassets */; };
 		1F3D01971B17613E00E9B59E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3D01951B17613E00E9B59E /* LaunchScreen.xib */; };
 		1F3D01A31B17613E00E9B59E /* EateriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3D01A21B17613E00E9B59E /* EateriesTests.swift */; };
+		1FD498A11B176C1600460D52 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD498A01B176C1600460D52 /* RootViewController.swift */; };
+		1FD498A51B17741300460D52 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1FD498A31B17741300460D52 /* DataModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,13 +30,14 @@
 		1F3D01871B17613E00E9B59E /* Eateries.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eateries.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F3D018B1B17613E00E9B59E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F3D018C1B17613E00E9B59E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1F3D018E1B17613E00E9B59E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1F3D01911B17613E00E9B59E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1F3D01931B17613E00E9B59E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1F3D01961B17613E00E9B59E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		1F3D019C1B17613E00E9B59E /* EateriesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EateriesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F3D01A11B17613E00E9B59E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F3D01A21B17613E00E9B59E /* EateriesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EateriesTests.swift; sourceTree = "<group>"; };
+		1FD498A01B176C1600460D52 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RootViewController.swift; path = "View Controllers/RootViewController.swift"; sourceTree = "<group>"; };
+		1FD498A41B17741300460D52 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,11 +79,10 @@
 		1F3D01891B17613E00E9B59E /* Eateries */ = {
 			isa = PBXGroup;
 			children = (
+				1FD498A21B1773EC00460D52 /* Data Model */,
+				1FD4989F1B176BF600460D52 /* UI */,
+				1FD4989E1B176BED00460D52 /* View Controllers */,
 				1F3D018C1B17613E00E9B59E /* AppDelegate.swift */,
-				1F3D018E1B17613E00E9B59E /* ViewController.swift */,
-				1F3D01901B17613E00E9B59E /* Main.storyboard */,
-				1F3D01931B17613E00E9B59E /* Images.xcassets */,
-				1F3D01951B17613E00E9B59E /* LaunchScreen.xib */,
 				1F3D018A1B17613E00E9B59E /* Supporting Files */,
 			);
 			path = Eateries;
@@ -110,6 +111,32 @@
 				1F3D01A11B17613E00E9B59E /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1FD4989E1B176BED00460D52 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				1FD498A01B176C1600460D52 /* RootViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		1FD4989F1B176BF600460D52 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				1F3D01901B17613E00E9B59E /* Main.storyboard */,
+				1F3D01931B17613E00E9B59E /* Images.xcassets */,
+				1F3D01951B17613E00E9B59E /* LaunchScreen.xib */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		1FD498A21B1773EC00460D52 /* Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				1FD498A31B17741300460D52 /* DataModel.xcdatamodeld */,
+			);
+			name = "Data Model";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,6 +188,7 @@
 				TargetAttributes = {
 					1F3D01861B17613E00E9B59E = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = G9EHQST8C5;
 					};
 					1F3D019B1B17613E00E9B59E = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -212,7 +240,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F3D018F1B17613E00E9B59E /* ViewController.swift in Sources */,
+				1FD498A51B17741300460D52 /* DataModel.xcdatamodeld in Sources */,
+				1FD498A11B176C1600460D52 /* RootViewController.swift in Sources */,
 				1F3D018D1B17613E00E9B59E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -342,9 +371,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Eateries/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -352,9 +384,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Eateries/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -411,6 +446,7 @@
 				1F3D01A81B17613E00E9B59E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1F3D01A91B17613E00E9B59E /* Build configuration list for PBXNativeTarget "EateriesTests" */ = {
 			isa = XCConfigurationList;
@@ -419,8 +455,23 @@
 				1F3D01AB1B17613E00E9B59E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1FD498A31B17741300460D52 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1FD498A41B17741300460D52 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 1FD498A41B17741300460D52 /* DataModel.xcdatamodel */;
+			name = DataModel.xcdatamodeld;
+			path = "Data Model/DataModel.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1F3D017F1B17613E00E9B59E /* Project object */;
 }
