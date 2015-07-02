@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class RootViewController: UITableViewController {
 
@@ -15,13 +16,44 @@ class RootViewController: UITableViewController {
     let editableSection = 1
     let numberOfSections = 2
     
-    // categories
+    // vars
+    var venueCollections = [NSManagedObject]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // load venue collections...first check if none exist - if not, add All Places & Favorites
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext!
+        let fetchRequest = NSFetchRequest(entityName: "VenueCollection")
+        var error : NSError?
         
+        let fetchedResults = managedContext.executeFetchRequest(fetchRequest, error: &error) as? [NSManagedObject]
+
+        if fetchedResults?.count > 0 {
+            // we are good
+            venueCollections = fetchedResults!
+        } else {
+            // add All Places
+            let venueCollectionEntity = NSEntityDescription.entityForName("VenueCollection", inManagedObjectContext: managedContext)
+            let allPlacesCollection = NSManagedObject(entity: venueCollectionEntity!, insertIntoManagedObjectContext: managedContext)
+            allPlacesCollection.setValue(NSLocalizedString("All Places", comment: "All Places"), forKey: "name")
+            allPlacesCollection.setValue("All Places", forKey: "iconImageName")
+            
+            // add Favorites
+            let favoritesCollection = NSManagedObject(entity: venueCollectionEntity!, insertIntoManagedObjectContext: managedContext)
+            favoritesCollection.setValue(NSLocalizedString("Favorites", comment: "Favorites"), forKey: "name")
+            favoritesCollection.setValue("Unselected-Favorite", forKey: "iconImageName")
+            
+            // save
+            if !managedContext.save(&error) {
+                
+            }
+            
+            // add to local data source
+            venueCollections.append(allPlacesCollection)
+            venueCollections.append(favoritesCollection)
+        }
     }
 
     // MARK: - Table view data source
@@ -36,28 +68,21 @@ class RootViewController: UITableViewController {
         if (section == nonEditableSection) {
             return numberOfSections
         } else {
-            return 0
+            return venueCollections.count - 2
         }
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-                
-        if (indexPath.section == 0) {
-            let cell = tableView.dequeueReusableCellWithIdentifier("Nonswipeable Venue Collection Cell", forIndexPath: indexPath) as! UITableViewCell
+        // venue collection
+        let venueCollection = venueCollections[indexPath.row]
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("Venue Collection Cell", forIndexPath: indexPath) as! UITableViewCell
             
-            // Configure the cell...
-            cell.textLabel?.text = "Collection Name"
-            
-            return cell
-        }
-        else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("Swipeable Venue Collection Cell", forIndexPath: indexPath) as! UITableViewCell
-            
-            // Configure the cell...
-            cell.textLabel?.text = "Collection Name"
-            
-            return cell
-        }
+        // Configure the cell...
+        cell.textLabel?.text = venueCollection.valueForKey("name") as? String
+        cell.imageView?.image = UIImage(named: (venueCollection.valueForKey("iconImageName") as? String)!)
+        
+        return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -89,7 +114,10 @@ class RootViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "Venue Collection Segue" {
+            let selectedVenueCollection = venueCollections[0] as? VenueCollection
+            let venueCollectionViewController = segue.destinationViewController as! VenueCollectionViewController
+            venueCollectionViewController.venueCollection = selectedVenueCollection
+        }
     }
 }

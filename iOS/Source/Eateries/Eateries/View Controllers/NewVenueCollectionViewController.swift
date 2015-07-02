@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreData
 
-class NewVenueCollectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
+class NewVenueCollectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UITextFieldDelegate {
 
     // MARK: - IBOutlets and Local Variables
     @IBOutlet weak var tableView : UITableView?
@@ -20,10 +21,9 @@ class NewVenueCollectionViewController: UIViewController, UITableViewDataSource,
     let textFieldTag = 99
     let nonSwipeableSection = 0
     let swipeableSection = 1
-    let iconNames: NSArray = ["Airplane", "Arena", "Barley", "Beach", "Beer Bottle", "Beer Glass", "Beer Mug", "Bento", "Big Ben",                  "Birthday Cake", "Bread", "Campfire", "Candy", "Capitol", "Car", "Carrot", "Champagne", "Cheese", "Chicken", "Cinnamon Roll", "Citrus", "City", "Cocktail", "Coconut Cocktail", "Coffee To Go", "Coffee", "Cookies", "Cooking Pot", "Corkscrew", "Crab", "Cruise Ship", "Cupcake", "Cutlery", "Doughnut", "Duck", "Eggs", "Eiffel Tower", "Farm", "Father", "Fish", "Flippers", "Forest", "French Fries", "Grapes", "Guitar", "Hamburger", "Heart", "Hot Chocolate", "Hot Dog", "Ice Cream bowl", "Kebab", "Lamb Rack", "Log Cabin", "Microphone", "Milk", "Mother", "Museum", "Music Transcript", "Noodles", "Pacifier", "Pastry Bag", "Peanuts", "Picnic", "Pig", "Pizza", "Pretzel", "Rabbit", "Railroad Car", "Saxophone", "Shrimp", "Sombrero", "Soy", "Spaghetti", "Statue of Liberty", "Steak", "Strawberry", "Suitcase", "Sushi", "Taco", "Taj Mahal", "Tea", "Teapot", "Tomato", "Vegan Food", "Water Bottle", "Wine Bottle", "Wine Glass", "Wrap", "Yacht"]
+    let iconNames: NSArray = ["Airplane", "Arena", "Barley", "Beach", "Beer Bottle", "Beer Glass", "Beer Mug", "Bento", "Big Ben", "Birthday Cake", "Bread", "Campfire", "Candy", "Capitol", "Car", "Carrot", "Champagne", "Cheese", "Chicken", "Cinnamon Roll", "Citrus", "City", "Cocktail", "Coconut Cocktail", "Coffee To Go", "Coffee", "Cookies", "Cooking Pot", "Corkscrew", "Crab", "Cruise Ship", "Cupcake", "Cutlery", "Doughnut", "Duck", "Eggs", "Eiffel Tower", "Farm", "Father", "Fish", "Flippers", "Forest", "French Fries", "Grapes", "Guitar", "Hamburger", "Heart", "Hot Chocolate", "Hot Dog", "Ice Cream bowl", "Kebab", "Lamb Rack", "Log Cabin", "Microphone", "Milk", "Mother", "Museum", "Music Transcript", "Noodles", "Pacifier", "Pastry Bag", "Peanuts", "Picnic", "Pig", "Pizza", "Pretzel", "Rabbit", "Railroad Car", "Saxophone", "Shrimp", "Sombrero", "Soy", "Spaghetti", "Statue of Liberty", "Steak", "Strawberry", "Suitcase", "Sushi", "Taco", "Taj Mahal", "Tea", "Teapot", "Tomato", "Vegan Food", "Water Bottle", "Wine Bottle", "Wine Glass", "Wrap", "Yacht"]
     
     // MARK: - UICollectionViewDelegate & UICollectionViewDataSource
-    
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -66,7 +66,6 @@ class NewVenueCollectionViewController: UIViewController, UITableViewDataSource,
     }
 
     // MARK: - UITableViewDelegate & UITableViewDataSource
-    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // Return the number of sections.
         return 2
@@ -84,10 +83,10 @@ class NewVenueCollectionViewController: UIViewController, UITableViewDataSource,
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if (section == nonSwipeableSection) {
-            return "Collection Name"
+            return NSLocalizedString("Collection Name", comment: "Collection Name")
         }
         else {
-            return "Collection Icon"
+            return NSLocalizedString("Collection Icon", comment: "Collection Icon")
         }
     }
     
@@ -100,8 +99,24 @@ class NewVenueCollectionViewController: UIViewController, UITableViewDataSource,
         
         // Configure the cell...
         nameTextField = cell.viewWithTag(textFieldTag) as? UITextField
-
+        nameTextField?.delegate = self
+        
         return cell
+    }
+    
+    // MARK: - UITextFieldDelegate
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        return true
+    }
+    
+    // MARK: - Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "Venue Collection Segue") {
+            //VenueCollectionViewController collectionVC = segue.destinationViewController
+            
+        }
     }
     
     // MARK: - IBActions

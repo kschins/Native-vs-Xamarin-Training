@@ -11,12 +11,17 @@
 		1F3D01921B17613E00E9B59E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F3D01901B17613E00E9B59E /* Main.storyboard */; };
 		1F3D01941B17613E00E9B59E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F3D01931B17613E00E9B59E /* Images.xcassets */; };
 		1F3D01971B17613E00E9B59E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3D01951B17613E00E9B59E /* LaunchScreen.xib */; };
+		1F5FC1651B2CA0070055D7C1 /* VenueCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5FC1641B2CA0070055D7C1 /* VenueCollectionViewController.swift */; };
+		1F5FC1671B2CA3220055D7C1 /* AddVenueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5FC1661B2CA3220055D7C1 /* AddVenueViewController.swift */; };
+		1F5FC1691B2CA5260055D7C1 /* VenueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5FC1681B2CA5260055D7C1 /* VenueCell.swift */; };
 		1FB0849A1B29FB4A00E6EE94 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB084981B29FB4A00E6EE94 /* Crashlytics.framework */; };
 		1FB0849B1B29FB4A00E6EE94 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB084991B29FB4A00E6EE94 /* Fabric.framework */; };
 		1FB0849D1B29FCA800E6EE94 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FB0849C1B29FCA800E6EE94 /* CoreData.framework */; };
 		1FB0849F1B29FDB700E6EE94 /* NewVenueCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0849E1B29FDB700E6EE94 /* NewVenueCollectionViewController.swift */; };
 		1FB084A21B2A04E300E6EE94 /* VenueSearchAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB084A11B2A04E300E6EE94 /* VenueSearchAPI.swift */; };
 		1FB084A81B2A35FA00E6EE94 /* IconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB084A71B2A35FA00E6EE94 /* IconCollectionViewCell.swift */; };
+		1FD2F7611B44177900BEC263 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2F7601B44177900BEC263 /* PersistenceController.swift */; };
+		1FD2F7961B4432CA00BEC263 /* VenueCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2F7951B4432CA00BEC263 /* VenueCollection.swift */; };
 		1FD498A11B176C1600460D52 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD498A01B176C1600460D52 /* RootViewController.swift */; };
 		1FD498A51B17741300460D52 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1FD498A31B17741300460D52 /* DataModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
@@ -39,12 +44,17 @@
 		1F3D01931B17613E00E9B59E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1F3D01961B17613E00E9B59E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		1F3D019C1B17613E00E9B59E /* EateriesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EateriesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F5FC1641B2CA0070055D7C1 /* VenueCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VenueCollectionViewController.swift; path = "View Controllers/VenueCollectionViewController.swift"; sourceTree = "<group>"; };
+		1F5FC1661B2CA3220055D7C1 /* AddVenueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddVenueViewController.swift; path = "View Controllers/AddVenueViewController.swift"; sourceTree = "<group>"; };
+		1F5FC1681B2CA5260055D7C1 /* VenueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VenueCell.swift; path = "View Controllers/Custom Views/Cells/VenueCell.swift"; sourceTree = "<group>"; };
 		1FB084981B29FB4A00E6EE94 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Eateries/Frameworks/Crashlytics.framework; sourceTree = "<group>"; };
 		1FB084991B29FB4A00E6EE94 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = Eateries/Frameworks/Fabric.framework; sourceTree = "<group>"; };
 		1FB0849C1B29FCA800E6EE94 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		1FB0849E1B29FDB700E6EE94 /* NewVenueCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewVenueCollectionViewController.swift; path = "View Controllers/NewVenueCollectionViewController.swift"; sourceTree = "<group>"; };
 		1FB084A11B2A04E300E6EE94 /* VenueSearchAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VenueSearchAPI.swift; path = "Search API/VenueSearchAPI.swift"; sourceTree = "<group>"; };
 		1FB084A71B2A35FA00E6EE94 /* IconCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IconCollectionViewCell.swift; path = "View Controllers/Custom Views/Cells/IconCollectionViewCell.swift"; sourceTree = "<group>"; };
+		1FD2F7601B44177900BEC263 /* PersistenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistenceController.swift; path = "Data Model/PersistenceController.swift"; sourceTree = "<group>"; };
+		1FD2F7951B4432CA00BEC263 /* VenueCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VenueCollection.swift; path = "Data Model/VenueCollection.swift"; sourceTree = "<group>"; };
 		1FD498A01B176C1600460D52 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RootViewController.swift; path = "View Controllers/RootViewController.swift"; sourceTree = "<group>"; };
 		1FD498A41B17741300460D52 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -140,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				1FB084A71B2A35FA00E6EE94 /* IconCollectionViewCell.swift */,
+				1F5FC1681B2CA5260055D7C1 /* VenueCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -150,6 +161,8 @@
 				1FB084A31B2A358A00E6EE94 /* Custom Views */,
 				1FD498A01B176C1600460D52 /* RootViewController.swift */,
 				1FB0849E1B29FDB700E6EE94 /* NewVenueCollectionViewController.swift */,
+				1F5FC1641B2CA0070055D7C1 /* VenueCollectionViewController.swift */,
+				1F5FC1661B2CA3220055D7C1 /* AddVenueViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -167,7 +180,9 @@
 		1FD498A21B1773EC00460D52 /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
+				1FD2F7951B4432CA00BEC263 /* VenueCollection.swift */,
 				1FD498A31B17741300460D52 /* DataModel.xcdatamodeld */,
+				1FD2F7601B44177900BEC263 /* PersistenceController.swift */,
 			);
 			name = "Data Model";
 			sourceTree = "<group>";
@@ -291,12 +306,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F5FC1651B2CA0070055D7C1 /* VenueCollectionViewController.swift in Sources */,
 				1FD498A51B17741300460D52 /* DataModel.xcdatamodeld in Sources */,
+				1F5FC1671B2CA3220055D7C1 /* AddVenueViewController.swift in Sources */,
+				1F5FC1691B2CA5260055D7C1 /* VenueCell.swift in Sources */,
 				1FB0849F1B29FDB700E6EE94 /* NewVenueCollectionViewController.swift in Sources */,
 				1FD498A11B176C1600460D52 /* RootViewController.swift in Sources */,
 				1F3D018D1B17613E00E9B59E /* AppDelegate.swift in Sources */,
+				1FD2F7961B4432CA00BEC263 /* VenueCollection.swift in Sources */,
 				1FB084A21B2A04E300E6EE94 /* VenueSearchAPI.swift in Sources */,
 				1FB084A81B2A35FA00E6EE94 /* IconCollectionViewCell.swift in Sources */,
+				1FD2F7611B44177900BEC263 /* PersistenceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
