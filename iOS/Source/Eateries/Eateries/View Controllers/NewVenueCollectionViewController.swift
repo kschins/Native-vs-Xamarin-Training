@@ -9,13 +9,18 @@
 import UIKit
 import CoreData
 
+protocol NewVenueCollectionProtocol {
+    func newVenueCollectionAdded(venueCollection : NSManagedObject)
+}
+
 class NewVenueCollectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UITextFieldDelegate {
 
     // MARK: - IBOutlets and Local Variables
     @IBOutlet weak var tableView : UITableView?
     @IBOutlet weak var collectionView : UICollectionView?
-    weak var nameTextField : UITextField?
-    var selectedIndexPathForIcon : NSIndexPath?
+    weak var nameTextField : UITextField!
+    var selectedIcon : Int?
+    var delegate: NewVenueCollectionProtocol?
     
     // MARK: - Constants
     let textFieldTag = 99
@@ -35,10 +40,10 @@ class NewVenueCollectionViewController: UIViewController, UITableViewDataSource,
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Icon Cell", forIndexPath: indexPath) as! IconCollectionViewCell
-        cell.layer.cornerRadius = 25.0
+        cell.layer.cornerRadius = 20.0
         cell.iconImageView?.image = UIImage(named: iconNames[indexPath.row] as! String)
         
-        if (selectedIndexPathForIcon != nil && selectedIndexPathForIcon?.row == indexPath.row) {
+        if (selectedIcon != nil && selectedIcon == indexPath.row) {
             cell.contentView.backgroundColor = UIColor.lightGrayColor()
         } else {
             cell.contentView.backgroundColor = nil
@@ -55,8 +60,8 @@ class NewVenueCollectionViewController: UIViewController, UITableViewDataSource,
         let cell = collectionView.cellForItemAtIndexPath(indexPath)
         cell?.contentView.backgroundColor = UIColor.lightGrayColor()
         
-        // save selected index path
-        selectedIndexPathForIcon = indexPath
+        // save selected icon
+        selectedIcon = indexPath.row
     }
     
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
@@ -111,14 +116,6 @@ class NewVenueCollectionViewController: UIViewController, UITableViewDataSource,
         return true
     }
     
-    // MARK: - Navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "Venue Collection Segue") {
-            //VenueCollectionViewController collectionVC = segue.destinationViewController
-            
-        }
-    }
-    
     // MARK: - IBActions
     @IBAction func dismissView() {
         nameTextField?.resignFirstResponder()
@@ -126,9 +123,41 @@ class NewVenueCollectionViewController: UIViewController, UITableViewDataSource,
     }
     
     @IBAction func saveVenue() {
-        // save
-        
-        // now dismiss
-        dismissView()
+        // save - verify name and image are selected
+        if nameTextField.text.isEmpty {
+            let alertController = UIAlertController(title: NSLocalizedString("Error", comment: "Error"), message: NSLocalizedString("A venue collection name is required.", comment: "Venue Collection Name Error"), preferredStyle: UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK"), style: UIAlertActionStyle.Default, handler: nil)
+            alertController.addAction(okAction)
+            
+            // show
+            presentViewController(alertController, animated: true, completion: nil)
+        } else if selectedIcon == nil {
+            let alertController = UIAlertController(title: NSLocalizedString("Error", comment: "Error"), message: NSLocalizedString("A venue collection icon is required.", comment: "Venue Collection Icon Error"), preferredStyle: UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK"), style: UIAlertActionStyle.Default, handler: nil)
+            alertController.addAction(okAction)
+            
+            // show
+            presentViewController(alertController, animated: true, completion: nil)
+        } else {
+            // actually save
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            let managedContext = appDelegate.managedObjectContext!
+            let venueCollectionEntity = NSEntityDescription.entityForName("VenueCollection", inManagedObjectContext: managedContext)
+            let newCollection = NSManagedObject(entity: venueCollectionEntity!, insertIntoManagedObjectContext: managedContext)
+            newCollection.setValue(nameTextField.text, forKey: "name")
+            newCollection.setValue(iconNames[selectedIcon!] as! String, forKey: "iconImageName")
+            
+            var error : NSError?
+
+            if !managedContext.save(&error) {
+                
+            }
+            
+            // protocol called
+            delegate?.newVenueCollectionAdded(newCollection)
+            
+            // now dismiss
+            dismissView()
+        }
     }
 }

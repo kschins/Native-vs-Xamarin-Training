@@ -2,13 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "ice_cream_bowl-50.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "ice_cream_bowl-100.png"
+      "filename" : "ice_cream_bowl-50.png"
     },
     {
       "idiom" : "universal",

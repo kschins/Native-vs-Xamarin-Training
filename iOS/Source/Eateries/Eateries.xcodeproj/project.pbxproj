@@ -100,6 +100,7 @@
 		1F3D01891B17613E00E9B59E /* Eateries */ = {
 			isa = PBXGroup;
 			children = (
+				1FD2F7971B44C03100BEC263 /* Extensions */,
 				1FB084A01B2A04AC00E6EE94 /* API */,
 				1FB084971B29FAEB00E6EE94 /* Frameworks */,
 				1FD498A21B1773EC00460D52 /* Data Model */,
@@ -153,6 +154,13 @@
 				1F5FC1681B2CA5260055D7C1 /* VenueCell.swift */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		1FD2F7971B44C03100BEC263 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		1FD4989E1B176BED00460D52 /* View Controllers */ = {

@@ -7,11 +7,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "airport-100.png"
+      "filename" : "airplane_take_off-75-1.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "airplane_take_off-75.png"
     }
   ],
   "info" : {

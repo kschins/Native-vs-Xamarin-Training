@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class RootViewController: UITableViewController {
+class RootViewController: UITableViewController, NewVenueCollectionProtocol {
 
     // constants
     let nonEditableSection = 0
@@ -38,7 +38,7 @@ class RootViewController: UITableViewController {
             let venueCollectionEntity = NSEntityDescription.entityForName("VenueCollection", inManagedObjectContext: managedContext)
             let allPlacesCollection = NSManagedObject(entity: venueCollectionEntity!, insertIntoManagedObjectContext: managedContext)
             allPlacesCollection.setValue(NSLocalizedString("All Places", comment: "All Places"), forKey: "name")
-            allPlacesCollection.setValue("All Places", forKey: "iconImageName")
+            allPlacesCollection.setValue("Cutlery", forKey: "iconImageName")
             
             // add Favorites
             let favoritesCollection = NSManagedObject(entity: venueCollectionEntity!, insertIntoManagedObjectContext: managedContext)
@@ -57,7 +57,6 @@ class RootViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // Return the number of sections.
         return numberOfSections
@@ -74,7 +73,13 @@ class RootViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // venue collection
-        let venueCollection = venueCollections[indexPath.row]
+        var currentCollection: Int = indexPath.row
+        
+        if indexPath.section == editableSection {
+            currentCollection = indexPath.row + 2
+        }
+        
+        let venueCollection = venueCollections[currentCollection]
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Venue Collection Cell", forIndexPath: indexPath) as! UITableViewCell
             
@@ -83,10 +88,6 @@ class RootViewController: UITableViewController {
         cell.imageView?.image = UIImage(named: (venueCollection.valueForKey("iconImageName") as? String)!)
         
         return cell
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 
     // Override to support conditional editing of the table view.
@@ -98,26 +99,32 @@ class RootViewController: UITableViewController {
             return true
         }
     }
-
     
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             // Delete the row from the data source
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
     
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "Venue Collection Segue" {
             let selectedVenueCollection = venueCollections[0] as? VenueCollection
             let venueCollectionViewController = segue.destinationViewController as! VenueCollectionViewController
             venueCollectionViewController.venueCollection = selectedVenueCollection
+        } else if segue.identifier == "Add New Collection Segue" {
+            let navViewController = segue.destinationViewController as! UINavigationController
+            let newVenueCollectionViewController = navViewController.viewControllers.first as! NewVenueCollectionViewController
+            newVenueCollectionViewController.delegate = self
         }
+    }
+    
+    // MARK: - New Venue Collection Protocol
+    func newVenueCollectionAdded(venueCollection: NSManagedObject) {
+        // add venue collection to array
+        venueCollections.append(venueCollection)
+        tableView.reloadData()
     }
 }
