@@ -13,6 +13,7 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
 
     // constants
     let nonEditableSection = 0
+    let nonEditableRows = 2
     let editableSection = 1
     let numberOfSections = 2
     
@@ -67,7 +68,7 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
         if (section == nonEditableSection) {
             return numberOfSections
         } else {
-            return venueCollections.count - 2
+            return venueCollections.count - nonEditableRows
         }
     }
 
@@ -76,7 +77,7 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
         var currentCollection: Int = indexPath.row
         
         if indexPath.section == editableSection {
-            currentCollection = indexPath.row + 2
+            currentCollection = indexPath.row + nonEditableRows
         }
         
         let venueCollection = venueCollections[currentCollection]
@@ -103,7 +104,22 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            // Delete the row from the data source
+            // delete from core data - can only delete from this section so need to add 2
+            let objectToDelete = venueCollections[indexPath.row + nonEditableRows]
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            let managedContext = appDelegate.managedObjectContext!
+            managedContext.deleteObject(objectToDelete)
+            
+            // save this change
+            var error : NSError?
+            
+            // save
+            if !managedContext.save(&error) {
+                    
+            }
+            
+            // delete the row from the data source
+            venueCollections.removeAtIndex(indexPath.row + nonEditableRows)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
     }
@@ -111,9 +127,16 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "Venue Collection Segue" {
-            let selectedVenueCollection = venueCollections[0] as? VenueCollection
+            let selectedIndexPath = tableView.indexPathForSelectedRow()
+            var currentCollection = selectedIndexPath!.row
+
+            if selectedIndexPath?.section == editableSection {
+                currentCollection += nonEditableRows
+            }
+            
+            let selectedVenueCollection = venueCollections[currentCollection]
             let venueCollectionViewController = segue.destinationViewController as! VenueCollectionViewController
-            venueCollectionViewController.venueCollection = selectedVenueCollection
+            venueCollectionViewController.venueCollection = (selectedVenueCollection as! VenueCollection)
         } else if segue.identifier == "Add New Collection Segue" {
             let navViewController = segue.destinationViewController as! UINavigationController
             let newVenueCollectionViewController = navViewController.viewControllers.first as! NewVenueCollectionViewController
