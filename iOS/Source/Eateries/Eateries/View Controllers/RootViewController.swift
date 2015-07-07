@@ -13,7 +13,7 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
 
     // constants
     let nonEditableSection = 0
-    let nonEditableRows = 2
+    let nonEditableRows = 3
     let editableSection = 1
     let numberOfSections = 2
     
@@ -46,6 +46,11 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
             favoritesCollection.setValue(NSLocalizedString("Favorites", comment: "Favorites"), forKey: "name")
             favoritesCollection.setValue("Unselected-Favorite", forKey: "iconImageName")
             
+            // add Nearby
+            let nearbyCollection = NSManagedObject(entity: venueCollectionEntity!, insertIntoManagedObjectContext: managedContext)
+            nearbyCollection.setValue(NSLocalizedString("Nearby", comment: "Nearby"), forKey: "name")
+            nearbyCollection.setValue("Current Location", forKey: "iconImageName")
+            
             // save
             if !managedContext.save(&error) {
                 
@@ -54,6 +59,7 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
             // add to local data source
             venueCollections.append(allPlacesCollection)
             venueCollections.append(favoritesCollection)
+            venueCollections.append(nearbyCollection)
         }
     }
 
