@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import SafariServices
+import MapKit
 
 protocol VenueAddedProtocol {
     func newVenueAdded(newVenue : FSVenue)
 }
 
-class VenueViewController : UITableViewController {
+class VenueViewController : UITableViewController, SFSafariViewControllerDelegate {
     
     var savedVenue: Venue?
     var venue: FSVenue?
@@ -53,6 +55,9 @@ class VenueViewController : UITableViewController {
             
             venue = FSVenue(venue: savedVenue!)
         }
+        
+        // title
+        title = venue?.name
     }
     
     // MARK: - Table view data source
@@ -74,6 +79,7 @@ class VenueViewController : UITableViewController {
         case venueNameRow:
             cell.headerLabel?.text = NSLocalizedString("NAME", comment: "NAME")
             cell.infoLabel?.text = venue?.name
+            cell.selectionStyle = .None
         case venuePhoneRow:
             cell.headerLabel?.text = NSLocalizedString("PHONE", comment: "PHONE")
             cell.infoLabel?.text = venue?.telephone
@@ -82,7 +88,7 @@ class VenueViewController : UITableViewController {
             cell.infoLabel?.text = venue?.website
         case venueTwitterRow:
             cell.headerLabel?.text = NSLocalizedString("TWITTER", comment: "TWITTER")
-            cell.infoLabel?.text = venue?.twitter
+            cell.infoLabel?.text = "@" + (venue?.twitter)!
         case venueAddressRow:
             cell.headerLabel?.text = NSLocalizedString("ADDRESS", comment: "ADDRESS")
             cell.infoLabel?.text = venue?.address
@@ -94,6 +100,40 @@ class VenueViewController : UITableViewController {
         return cell
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        switch (indexPath.row) {
+        case venuePhoneRow:
+            // call - if number is valid
+            let phone = venue?.strippedVenueTelephone()
+            UIApplication.sharedApplication().openURL(NSURL(string: "tel://" + phone!)!)
+        case venueWebsiteRow:
+            // open safari
+            openWithSafariVC((venue?.website)!)
+        case venueTwitterRow:
+            // open twitter in safari
+            let twitterURL = "https://twitter.com/" + (venue?.twitter)!
+            openWithSafariVC(twitterURL)
+        case venueAddressRow:
+            // open apple maps
+            let regionDistance: CLLocationDistance = 1000
+            let coordinates = CLLocationCoordinate2DMake((venue?.latitude)!, (venue?.longitude)!)
+            let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
+            let options = [
+                MKLaunchOptionsMapCenterKey: NSValue(MKCoordinate: regionSpan.center),
+                MKLaunchOptionsMapSpanKey: NSValue(MKCoordinateSpan: regionSpan.span)
+            ]
+            let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+            let mapItem = MKMapItem(placemark: placemark)
+            mapItem.name = venue?.name
+            mapItem.openInMapsWithLaunchOptions(options)
+        default:
+            break
+        }
+        
+        // deselect row
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
     // MARK: - IBActions
     @IBAction func saveVenue() {
         // pass venue to be added to delegate
@@ -101,5 +141,17 @@ class VenueViewController : UITableViewController {
         
         // dismiss view once saved
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // MARK: - Private Methods
+    func openWithSafariVC(urlString: String) {
+        let svc = SFSafariViewController(URL: NSURL(string: urlString)!)
+        svc.delegate = self
+        self.presentViewController(svc, animated: true, completion: nil)
+    }
+    
+    // MARK: - SFSafariViewControllerDelegate
+    func safariViewControllerDidFinish(controller: SFSafariViewController) {
+        controller.dismissViewControllerAnimated(true, completion: nil)
     }
 }

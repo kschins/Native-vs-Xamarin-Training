@@ -56,7 +56,7 @@ class FSVenue {
                 self.twitter = handle
             }
         } else {
-            validVenue = false
+            //validVenue = false
         }
         
         // location
@@ -130,5 +130,14 @@ class FSVenue {
         }
         
         return venue
+    }
+    
+    func strippedVenueTelephone() -> String {
+        telephone = telephone?.stringByReplacingOccurrencesOfString("(", withString: "")
+        telephone = telephone?.stringByReplacingOccurrencesOfString(")", withString: "")
+        telephone = telephone?.stringByReplacingOccurrencesOfString(" ", withString: "")
+        telephone = telephone?.stringByReplacingOccurrencesOfString("-", withString: "")
+        
+        return telephone!
     }
 }
