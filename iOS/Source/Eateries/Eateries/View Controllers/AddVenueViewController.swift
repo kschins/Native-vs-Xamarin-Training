@@ -70,6 +70,13 @@ class AddVenueViewController: UITableViewController, UITextFieldDelegate, VenueA
         }
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // show keyboard for name
+        queryTextField.becomeFirstResponder()
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         

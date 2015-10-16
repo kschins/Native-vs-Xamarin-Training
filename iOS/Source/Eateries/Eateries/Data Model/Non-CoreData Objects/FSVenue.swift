@@ -140,4 +140,11 @@ class FSVenue {
         
         return telephone!
     }
+    
+    func displayAddress() -> String {
+        var displayAddress: String = address! + "\n"
+        displayAddress += city! + ", " + state! + " " + postalCode!
+        
+        return displayAddress
+    }
 }

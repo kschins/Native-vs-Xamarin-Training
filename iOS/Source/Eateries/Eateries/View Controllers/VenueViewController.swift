@@ -85,13 +85,23 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
             cell.infoLabel?.text = venue?.telephone
         case venueWebsiteRow:
             cell.headerLabel?.text = NSLocalizedString("WEBSITE", comment: "WEBSITE")
-            cell.infoLabel?.text = venue?.website
+            
+            if let website = venue?.website {
+                cell.infoLabel?.text = "@\(website)"
+            } else {
+                cell.infoLabel?.text = ""
+            }
         case venueTwitterRow:
             cell.headerLabel?.text = NSLocalizedString("TWITTER", comment: "TWITTER")
-            cell.infoLabel?.text = "@" + (venue?.twitter)!
+            
+            if let twitter = venue?.twitter {
+                cell.infoLabel?.text = "@\(twitter)"
+            } else {
+                cell.infoLabel?.text = ""
+            }
         case venueAddressRow:
             cell.headerLabel?.text = NSLocalizedString("ADDRESS", comment: "ADDRESS")
-            cell.infoLabel?.text = venue?.address
+            cell.infoLabel?.text = venue?.displayAddress()
         default:
             cell.headerLabel?.text = ""
             cell.infoLabel?.text = ""
@@ -132,6 +142,14 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
         
         // deselect row
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.row == venueAddressRow {
+            return 80
+        } else {
+            return 55
+        }
     }
     
     // MARK: - IBActions

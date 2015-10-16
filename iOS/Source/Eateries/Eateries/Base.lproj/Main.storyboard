@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="r8L-OC-SIh">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -68,27 +67,19 @@
                         <animations/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Venue Cell" textLabel="j0W-cC-yip" detailTextLabel="DDG-aj-lZH" style="IBUITableViewCellStyleSubtitle" id="uvx-tG-3eB">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Venue Cell" textLabel="j0W-cC-yip" style="IBUITableViewCellStyleDefault" id="uvx-tG-3eB">
                                 <rect key="frame" x="0.0" y="114" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uvx-tG-3eB" id="whG-Ug-be2">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="49.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="j0W-cC-yip">
-                                            <rect key="frame" x="15" y="7" width="35.5" height="21.5"/>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="j0W-cC-yip">
+                                            <rect key="frame" x="15" y="0.0" width="270" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DDG-aj-lZH">
-                                            <rect key="frame" x="15" y="28.5" width="33" height="14.5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <animations/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -144,12 +135,9 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pZU-rU-eAi">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pZU-rU-eAi">
                                             <rect key="frame" x="15" y="25" width="290" height="21"/>
                                             <animations/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="TXd-ah-qAj"/>
-                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
@@ -160,6 +148,7 @@
                                         <constraint firstAttribute="trailing" secondItem="blw-0J-IQY" secondAttribute="trailing" constant="15" id="5ue-ED-Nji"/>
                                         <constraint firstItem="pZU-rU-eAi" firstAttribute="leading" secondItem="bGr-Bv-Vug" secondAttribute="leading" constant="15" id="DLL-I3-OkU"/>
                                         <constraint firstAttribute="trailing" secondItem="pZU-rU-eAi" secondAttribute="trailing" constant="15" id="bEZ-0E-0Qu"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="pZU-rU-eAi" secondAttribute="bottom" constant="1" id="eux-kE-AeM"/>
                                         <constraint firstItem="pZU-rU-eAi" firstAttribute="top" secondItem="blw-0J-IQY" secondAttribute="bottom" constant="2" id="j3d-k7-DQb"/>
                                         <constraint firstItem="blw-0J-IQY" firstAttribute="leading" secondItem="bGr-Bv-Vug" secondAttribute="leading" constant="15" id="o7m-Jv-s2r"/>
                                         <constraint firstItem="blw-0J-IQY" firstAttribute="top" secondItem="bGr-Bv-Vug" secondAttribute="top" constant="8" id="vqM-3l-0Xi"/>
