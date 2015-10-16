@@ -3,27 +3,33 @@
     <entity name="Venue" representedClassName="Eateries.Venue" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="telephone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="twitter" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="venueID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="website" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="address" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VenueAddress" inverseName="venue" inverseEntity="VenueAddress" syncable="YES"/>
-        <relationship name="venueCollection" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VenueCollection" inverseName="venues" inverseEntity="VenueCollection" syncable="YES"/>
+        <relationship name="venueCollection" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VenueCollection" inverseName="venues" inverseEntity="VenueCollection" syncable="YES"/>
     </entity>
     <entity name="VenueAddress" representedClassName="Eateries.VenueAddress" syncable="YES">
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="postalCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="streetNumber" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="venue" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Venue" inverseName="address" inverseEntity="Venue" syncable="YES"/>
+        <relationship name="venue" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Venue" inverseName="address" inverseEntity="Venue" syncable="YES"/>
     </entity>
     <entity name="VenueCollection" representedClassName="Eateries.VenueCollection" syncable="YES">
+        <attribute name="canDelete" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="creationDate" attributeType="Date" syncable="YES"/>
         <attribute name="iconImageName" attributeType="String" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="venues" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Venue" inverseName="venueCollection" inverseEntity="Venue" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Venue" positionX="-63" positionY="-18" width="128" height="120"/>
-        <element name="VenueAddress" positionX="-36" positionY="9" width="128" height="150"/>
-        <element name="VenueCollection" positionX="-54" positionY="-9" width="128" height="90"/>
+        <element name="Venue" positionX="-63" positionY="-18" width="128" height="150"/>
+        <element name="VenueAddress" positionX="-36" positionY="9" width="128" height="180"/>
+        <element name="VenueCollection" positionX="-54" positionY="-9" width="128" height="120"/>
     </elements>
 </model>

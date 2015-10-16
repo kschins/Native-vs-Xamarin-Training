@@ -7,25 +7,35 @@
 //
 
 import Foundation
+import CoreData
 
 class FSVenue {
-    var name : String?
+    let venueID : String
+    let name : String
     var website : String?
-    var address : String?
-    var city : String?
-    var state : String?
-    var postalCode : String?
-    var latitude : Double?
-    var longitude : Double?
     var telephone : String?
     var twitter : String?
     
+    // address
+    var hasAddress = true
+    var address : String?
+    var city : String?
+    var state : String?
+    var country : String?
+    var postalCode : String?
+    var latitude : Double?
+    var longitude : Double?
+    
+    // valid venue
+    var validVenue = true
+    
     init(venue : [String : AnyObject]) {
-        // name
-        if let venueName = venue["name"] as? String {
-            self.name = venueName
-        }
+        // id
+        self.venueID = venue["id"] as! String
         
+        // name
+        self.name = venue["name"] as! String
+    
         // website
         if let url = venue["url"] as? String {
             self.website = url
@@ -37,11 +47,16 @@ class FSVenue {
             if let phone = contact["formattedPhone"] as? String
             {
                 self.telephone = phone
+            } else {
+                validVenue = false
             }
+            
             if let handle = contact["twitter"] as? String
             {
                 self.twitter = handle
             }
+        } else {
+            validVenue = false
         }
         
         // location
@@ -50,15 +65,70 @@ class FSVenue {
         venueCity = location["city"] as? String,
         venueState = location["state"] as? String,
         venuePostalCode = location["postalCode"] as? String,
+        venueCountry = location["country"] as? String,
         lat = location["lat"] as? Double,
         lng = location["lng"] as? Double
         {
             self.address = venueAddress
             self.city = venueCity
             self.state = venueState
+            self.country = venueCountry
             self.postalCode = venuePostalCode
             self.latitude = lat
             self.longitude = lng
+        } else {
+            self.hasAddress = false
         }
+    }
+    
+    init(venue: Venue) {
+        self.name = venue.name
+        self.venueID = venue.venueID
+        self.telephone = venue.telephone
+        self.website = venue.website
+        self.twitter = venue.twitter
+        
+        // address
+        self.address = venue.address.street
+        self.city = venue.address.city
+        self.state = venue.address.state
+        self.country = venue.address.country
+        self.postalCode = venue.address.postalCode
+        self.latitude = venue.address.latitude.doubleValue
+        self.longitude = venue.address.longitude.doubleValue
+    }
+    
+    func createVenue(moc: NSManagedObjectContext) -> Venue {
+        let venue = Venue.insertNewObject(moc)
+        venue.name = self.name
+        venue.venueID = self.venueID
+        
+        if let phone = self.telephone {
+            venue.telephone = phone
+        }
+        
+        if let handle = self.twitter {
+            venue.twitter = handle
+        }
+        
+        if let url = self.website {
+            venue.website = url
+        }
+        
+        // create address
+        let venueAddress = VenueAddress.insertNewObject(moc)
+        venueAddress.venue = venue
+        
+        if hasAddress {
+            venueAddress.street = address!
+            venueAddress.city = city!
+            venueAddress.state = state!
+            venueAddress.postalCode = postalCode!
+            venueAddress.country = country!
+            venueAddress.latitude = NSNumber(double: latitude!)
+            venueAddress.longitude = NSNumber(double: longitude!)
+        }
+        
+        return venue
     }
 }

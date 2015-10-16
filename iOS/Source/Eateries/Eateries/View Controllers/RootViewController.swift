@@ -16,9 +16,12 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
     let nonEditableRows = 3
     let editableSection = 1
     let numberOfSections = 2
+    let allPlacesRow = 0
+    let favoritesRow = 1
+    let nearbyRow = 2
     
     // vars
-    var venueCollections = [NSManagedObject]()
+    var venueCollections = [VenueCollection]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,39 +30,47 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext!
         let fetchRequest = NSFetchRequest(entityName: "VenueCollection")
-        var error : NSError?
+        let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
         
-        let fetchedResults = managedContext.executeFetchRequest(fetchRequest, error: &error) as? [NSManagedObject]
-
-        if fetchedResults?.count > 0 {
-            // we are good
-            venueCollections = fetchedResults!
-        } else {
-            // add All Places
-            let venueCollectionEntity = NSEntityDescription.entityForName("VenueCollection", inManagedObjectContext: managedContext)
-            let allPlacesCollection = NSManagedObject(entity: venueCollectionEntity!, insertIntoManagedObjectContext: managedContext)
-            allPlacesCollection.setValue(NSLocalizedString("All Places", comment: "All Places"), forKey: "name")
-            allPlacesCollection.setValue("Cutlery", forKey: "iconImageName")
+        do {
+            let fetchedResults = try managedContext.executeFetchRequest(fetchRequest) as? [VenueCollection]
             
-            // add Favorites
-            let favoritesCollection = NSManagedObject(entity: venueCollectionEntity!, insertIntoManagedObjectContext: managedContext)
-            favoritesCollection.setValue(NSLocalizedString("Favorites", comment: "Favorites"), forKey: "name")
-            favoritesCollection.setValue("Unselected-Favorite", forKey: "iconImageName")
-            
-            // add Nearby
-            let nearbyCollection = NSManagedObject(entity: venueCollectionEntity!, insertIntoManagedObjectContext: managedContext)
-            nearbyCollection.setValue(NSLocalizedString("Nearby", comment: "Nearby"), forKey: "name")
-            nearbyCollection.setValue("Current Location", forKey: "iconImageName")
-            
-            // save
-            if !managedContext.save(&error) {
+            if fetchedResults?.count > 0 {
+                // we are good
+                venueCollections = fetchedResults!
+            } else {
+                // add All Places
+                let allPlaces = VenueCollection.insertNewObject(managedContext)
+                allPlaces.name = NSLocalizedString("All Places", comment: "All Places")
+                allPlaces.iconImageName = "Cutlery"
+                allPlaces.creationDate = NSDate()
+                allPlaces.canDelete = NSNumber(bool: false)
                 
-            }
+                // add Favorites
+                let favorites = VenueCollection.insertNewObject(managedContext)
+                favorites.name = NSLocalizedString("Favorites", comment: "Favorites")
+                favorites.iconImageName = "Unselected-Favorite"
+                favorites.creationDate = NSDate()
+                favorites.canDelete = NSNumber(bool: false)
+                
+                // add Nearby
+                let nearby = VenueCollection.insertNewObject(managedContext)
+                nearby.name = NSLocalizedString("Nearby", comment: "Nearby")
+                nearby.iconImageName = "Current Location"
+                nearby.creationDate = NSDate()
+                nearby.canDelete = NSNumber(bool: false)
             
-            // add to local data source
-            venueCollections.append(allPlacesCollection)
-            venueCollections.append(favoritesCollection)
-            venueCollections.append(nearbyCollection)
+                // save
+                appDelegate.saveContext()
+                
+                // add to local data source
+                venueCollections.append(allPlaces)
+                venueCollections.append(favorites)
+                venueCollections.append(nearby)
+            }
+        } catch {
+            print("Failed to save")
         }
     }
 
@@ -71,8 +82,8 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
-        if (section == nonEditableSection) {
-            return numberOfSections
+        if section == nonEditableSection {
+            return nonEditableRows
         } else {
             return venueCollections.count - nonEditableRows
         }
@@ -88,19 +99,33 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
         
         let venueCollection = venueCollections[currentCollection]
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Venue Collection Cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Venue Collection Cell", forIndexPath: indexPath) 
             
         // Configure the cell...
-        cell.textLabel?.text = venueCollection.valueForKey("name") as? String
-        cell.imageView?.image = UIImage(named: (venueCollection.valueForKey("iconImageName") as? String)!)
+        cell.textLabel?.text = venueCollection.name
+        cell.imageView?.image = UIImage(named: venueCollection.iconImageName)
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        // figure out segue
+        let segueName: String
+        
+        if indexPath.section == nonEditableSection && indexPath.row == nearbyRow {
+            segueName = "Show Nearby Places"
+        } else {
+            segueName = "Show Venue Collection"
+        }
+        
+        // perform the right segue
+        performSegueWithIdentifier(segueName, sender: nil)
     }
 
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return NO if you do not want the specified item to be editable.
-        if (indexPath.section == nonEditableSection) {
+        if indexPath.section == nonEditableSection {
             return false
         } else {
             return true
@@ -116,13 +141,8 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
             let managedContext = appDelegate.managedObjectContext!
             managedContext.deleteObject(objectToDelete)
             
-            // save this change
-            var error : NSError?
-            
             // save
-            if !managedContext.save(&error) {
-                    
-            }
+            appDelegate.saveContext()
             
             // delete the row from the data source
             venueCollections.removeAtIndex(indexPath.row + nonEditableRows)
@@ -132,17 +152,16 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
     
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "Venue Collection Segue" {
-            let selectedIndexPath = tableView.indexPathForSelectedRow()
+        if segue.identifier == "Show Venue Collection" {
+            let selectedIndexPath = tableView.indexPathForSelectedRow
             var currentCollection = selectedIndexPath!.row
 
             if selectedIndexPath?.section == editableSection {
                 currentCollection += nonEditableRows
             }
             
-            let selectedVenueCollection = venueCollections[currentCollection]
             let venueCollectionViewController = segue.destinationViewController as! VenueCollectionViewController
-            venueCollectionViewController.venueCollection = (selectedVenueCollection as! VenueCollection)
+            venueCollectionViewController.venueCollection = venueCollections[currentCollection]
         } else if segue.identifier == "Add New Collection Segue" {
             let navViewController = segue.destinationViewController as! UINavigationController
             let newVenueCollectionViewController = navViewController.viewControllers.first as! NewVenueCollectionViewController
@@ -151,7 +170,7 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
     }
     
     // MARK: - New Venue Collection Protocol
-    func newVenueCollectionAdded(venueCollection: NSManagedObject) {
+    func newVenueCollectionAdded(venueCollection: VenueCollection) {
         // add venue collection to array
         venueCollections.append(venueCollection)
         tableView.reloadData()

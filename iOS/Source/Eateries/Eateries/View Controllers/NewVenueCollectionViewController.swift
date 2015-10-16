@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 protocol NewVenueCollectionProtocol {
-    func newVenueCollectionAdded(venueCollection : NSManagedObject)
+    func newVenueCollectionAdded(venueCollection : VenueCollection)
 }
 
 class NewVenueCollectionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UITextFieldDelegate {
@@ -78,7 +78,7 @@ class NewVenueCollectionViewController: UIViewController, UITableViewDataSource,
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
-        if (section == nonSwipeableSection) {
+        if section == nonSwipeableSection {
             return 1
         }
         else {
@@ -87,7 +87,7 @@ class NewVenueCollectionViewController: UIViewController, UITableViewDataSource,
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if (section == nonSwipeableSection) {
+        if section == nonSwipeableSection {
             return NSLocalizedString("Collection Name", comment: "Collection Name")
         }
         else {
@@ -100,7 +100,7 @@ class NewVenueCollectionViewController: UIViewController, UITableViewDataSource,
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Name Cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Name Cell", forIndexPath: indexPath) 
         
         // Configure the cell...
         nameTextField = cell.viewWithTag(textFieldTag) as? UITextField
@@ -124,7 +124,7 @@ class NewVenueCollectionViewController: UIViewController, UITableViewDataSource,
     
     @IBAction func saveVenue() {
         // save - verify name and image are selected
-        if nameTextField.text.isEmpty {
+        if nameTextField.text!.isEmpty {
             let alertController = UIAlertController(title: NSLocalizedString("Error", comment: "Error"), message: NSLocalizedString("A venue collection name is required.", comment: "Venue Collection Name Error"), preferredStyle: UIAlertControllerStyle.Alert)
             let okAction = UIAlertAction(title: NSLocalizedString("OK", comment: "OK"), style: UIAlertActionStyle.Default, handler: nil)
             alertController.addAction(okAction)
@@ -142,16 +142,14 @@ class NewVenueCollectionViewController: UIViewController, UITableViewDataSource,
             // actually save
             let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             let managedContext = appDelegate.managedObjectContext!
-            let venueCollectionEntity = NSEntityDescription.entityForName("VenueCollection", inManagedObjectContext: managedContext)
-            let newCollection = NSManagedObject(entity: venueCollectionEntity!, insertIntoManagedObjectContext: managedContext)
-            newCollection.setValue(nameTextField.text, forKey: "name")
-            newCollection.setValue(iconNames[selectedIcon!] as! String, forKey: "iconImageName")
+            let newCollection = VenueCollection.insertNewObject(managedContext)
+            newCollection.name = nameTextField.text!
+            newCollection.iconImageName = iconNames[selectedIcon!] as! String
+            newCollection.creationDate = NSDate()
+            newCollection.canDelete = NSNumber(bool: true)
             
-            var error : NSError?
-
-            if !managedContext.save(&error) {
-                
-            }
+            // save
+            appDelegate.saveContext()
             
             // protocol called
             delegate?.newVenueCollectionAdded(newCollection)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VenueCollectionViewController: UITableViewController {
+class VenueCollectionViewController: UITableViewController, VenueAddedToCollectionProtocol {
 
     var venueCollection : VenueCollection?
     
@@ -32,11 +32,11 @@ class VenueCollectionViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Venue Cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Venue Cell", forIndexPath: indexPath) 
 
         // Configure the cell...
-        cell.textLabel?.text = "Venue Name"
-        cell.detailTextLabel?.text = "Cuisine Type"
+        let venue = venueCollection!.venues.allObjects[indexPath.row] as? Venue
+        cell.textLabel?.text = venue?.name
         
         return cell
     }
@@ -50,16 +50,51 @@ class VenueCollectionViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            // Delete the row from the data source
+            // delete from core data - can only delete from this section so need to add 2
+            let objectToDelete = venueCollection?.venues.allObjects[indexPath.row] as! Venue
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            let managedContext = appDelegate.managedObjectContext!
+            managedContext.deleteObject(objectToDelete)
+            
+            // save
+            appDelegate.saveContext()
+            
+            // delete the row from the data source
+            venueCollection?.removeVenue(objectToDelete)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
 
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "Show Venue Detail Segue" {
+            let selectedIndexPath = tableView.indexPathForSelectedRow
+            let selectedVenue = venueCollection?.venues.allObjects[selectedIndexPath!.row] as? Venue
+            let venueVC = segue.destinationViewController as! VenueViewController
+            venueVC.savedVenue = selectedVenue
+        } else if segue.identifier == "Add Venue Segue" {
+            let navViewController = segue.destinationViewController as! UINavigationController
+            let newVenueViewController = navViewController.viewControllers.first as! AddVenueViewController
+            newVenueViewController.delegate = self
+        }
+    }
+    
+    // MARK: - VenueAddedToCollectionProtocol
+    func addVenueToCollection(newVenue: FSVenue) {
+        // create Venue from FSVenue
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext!
+        
+        // setup new venue - add collection
+        let venue = newVenue.createVenue(managedContext)
+        
+        // add venue to necessary collections
+        venueCollection?.addVenue(venue)
+        
+        // save
+        appDelegate.saveContext()
+        
+        // reload table view
+        tableView.reloadData()
     }
 }

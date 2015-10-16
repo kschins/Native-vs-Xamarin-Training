@@ -21,14 +21,15 @@ enum VenueSearchError: Int {
 class VenueSearchAPI {
     // keys and URLs
     private let CLIENT_ID = "TKLBXOOZPWRUWWJ0LNXAEPVK4PVYIRXSRTGX5YCEFI2HRAVA"
-    private let CLIENT_SECRET = ""
+    private let CLIENT_SECRET = "DWROOB5ZAGLOFXOCGQPR02RXQ1NVE3FMUJYLSNH3CHULIKK0"
     private let VENUE_SEARCH_API_ENDPOINT = "https://api.foursquare.com/v2/venues/search"
     private let VENUE_EXPLORE_API_ENDPOINT = "https://api.foursquare.com/v2/venues/explore"
     private let VENUE_ID_API_ENDPOINT = "https://api.foursquare.com/v2/venues/"
     private let config: NSURLSessionConfiguration
     private let session: NSURLSession
     
-    typealias VenueArrayCompletionClosure = (Array<FSVenue>) -> ()
+    typealias VenueArrayCompletionClosure = (Array<FSVenue>) -> Void
+    typealias VenueCompletionClosure = (FSVenue?, Bool) -> Void
     
     // MARK: - Initialization
     init() {
@@ -46,17 +47,16 @@ class VenueSearchAPI {
     func fetchVenues(queryTerm: String, location: String, completionClosure: VenueArrayCompletionClosure) {
         // setup URL
         let stringURL = VENUE_SEARCH_API_ENDPOINT + "?near=" + encodeString(location) + "&query=" + encodeString(queryTerm) + "&" + foursquareAPIEnding()
-        println(stringURL)
         let url = NSURL(string: stringURL)
         
         // execute
-        let task = session.dataTaskWithURL(url!, completionHandler: { (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
+        let task = session.dataTaskWithURL(url!, completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             if let httpResponse = response as? NSHTTPURLResponse {
                 switch(httpResponse.statusCode) {
                 case 200:
-                    self.parseVenuesFromJSON(data, completionClosure: completionClosure)
+                    self.parseVenuesFromJSON(data!, completionClosure: completionClosure)
                 default:
-                    println("Got an HTTP \(httpResponse.statusCode)")
+                    print("Got an HTTP \(httpResponse.statusCode)")
                     dispatch_async(dispatch_get_main_queue(), {
                         completionClosure([FSVenue]())
                     })
@@ -76,17 +76,16 @@ class VenueSearchAPI {
         // setup URL
         let latAndLong = "?ll=\(latitude),\(longitude)"
         let stringURL = VENUE_SEARCH_API_ENDPOINT + latAndLong + "&query=" + encodeString(queryTerm) + "&" + foursquareAPIEnding();
-        println(stringURL)
         let url = NSURL(string: stringURL)
         
         // execute
-        let task = session.dataTaskWithURL(url!, completionHandler: { (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
+        let task = session.dataTaskWithURL(url!, completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             if let httpResponse = response as? NSHTTPURLResponse {
                 switch(httpResponse.statusCode) {
                 case 200:
-                    self.parseVenuesFromJSON(data, completionClosure: completionClosure)
+                    self.parseVenuesFromJSON(data!, completionClosure: completionClosure)
                 default:
-                    println("Got an HTTP \(httpResponse.statusCode)")
+                    print("Got an HTTP \(httpResponse.statusCode)")
                     dispatch_async(dispatch_get_main_queue(), {
                         completionClosure([FSVenue]())
                     })
@@ -101,27 +100,26 @@ class VenueSearchAPI {
         task.resume()
     }
     
-    func fetchVenue(venueID: String, completionClosure: VenueArrayCompletionClosure) {
+    func fetchVenue(venueID: String, completionClosure: VenueCompletionClosure) {
         // setup URL
         let stringURL = VENUE_ID_API_ENDPOINT + venueID + "?" + foursquareAPIEnding()
-        println(stringURL)
         let url = NSURL(string: stringURL)
         
         // execute
-        let task = session.dataTaskWithURL(url!, completionHandler: { (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
+        let task = session.dataTaskWithURL(url!, completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             if let httpResponse = response as? NSHTTPURLResponse {
                 switch(httpResponse.statusCode) {
                 case 200:
-                    self.parseVenuesFromJSON(data, completionClosure: completionClosure)
+                    self.parseVenueFromJSON(data!, completionClosure: completionClosure)
                 default:
-                    println("Got an HTTP \(httpResponse.statusCode)")
+                    print("Got an HTTP \(httpResponse.statusCode)")
                     dispatch_async(dispatch_get_main_queue(), {
-                        completionClosure([FSVenue]())
+                        completionClosure(nil, false)
                     })
                 }
             } else {
                 dispatch_async(dispatch_get_main_queue(), {
-                    completionClosure([FSVenue]())
+                    completionClosure(nil, false)
                 })
             }
         })
@@ -142,38 +140,61 @@ class VenueSearchAPI {
     
     private func encodeString(stringToEncode: String) -> String {
         let term = stringToEncode.stringByReplacingOccurrencesOfString(" ", withString: "+", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil);
-        let escapedTerm = term.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+        let escapedTerm = term.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
         
         return escapedTerm!
     }
     
     private func parseVenuesFromJSON(data: NSData, completionClosure: VenueArrayCompletionClosure) {
-        var jsonError: NSError?
-        
-        if let json = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &jsonError) as? [String: AnyObject],
-        response = json["response"] as? [String: AnyObject],
-        venues = response["venues"] as? [[String: AnyObject]]
-        {
-            var allVenues = [FSVenue]()
-            
-            for venue in venues {
-                // append venues to array
+        do {
+            if let json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject],
+            response = json["response"] as? [String: AnyObject],
+            venues = response["venues"] as? [[String: AnyObject]]
+            {
+                var allVenues = [FSVenue]()
+                
+                for venue in venues {
+                    // append venues to array
+                    let newVenue = FSVenue(venue: venue)
+                    
+                    if newVenue.validVenue {
+                        allVenues.append(newVenue)
+                    }
+                }
+                
+                // call completion on main thread
+                dispatch_async(dispatch_get_main_queue(), {
+                    completionClosure(allVenues)
+                })
+            } else {
+                dispatch_async(dispatch_get_main_queue(), {
+                    completionClosure([FSVenue]())
+                })
+            }
+        } catch let error as NSError {
+            print("Failed to parse JSON venues. Error : \(error.domain)")
+        }
+    }
+    
+    private func parseVenueFromJSON(data: NSData, completionClosure: VenueCompletionClosure) {
+        do {
+            if let json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject],
+            response = json["response"] as? [String: AnyObject],
+            venue = response["venue"] as? [String: AnyObject]
+            {
+                // venue
                 let newVenue = FSVenue(venue: venue)
-                allVenues.append(newVenue)
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    completionClosure(newVenue, true)
+                })
+            } else {
+                dispatch_async(dispatch_get_main_queue(), {
+                    completionClosure(nil, false)
+                })
             }
-            
-            // call completion on main thread
-            dispatch_async(dispatch_get_main_queue(), {
-                completionClosure(allVenues)
-            })
-        } else {
-            if let jsonError = jsonError {
-                println("json error: \(jsonError)")
-            }
-            
-            dispatch_async(dispatch_get_main_queue(), {
-                completionClosure([FSVenue]())
-            })
+        } catch let error as NSError {
+            print("Failed to parse JSON venue. Error: \(error.domain)")
         }
     }
 }
