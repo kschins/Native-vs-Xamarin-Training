@@ -19,7 +19,7 @@
                                 <rect key="frame" x="0.0" y="114" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0vO-pt-5bF" id="vNF-JO-sdb">
-                                    <rect key="frame" x="0.0" y="0.0" width="287" height="49.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collection Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NQI-Yh-RJo">
@@ -40,7 +40,6 @@
                                     </subviews>
                                     <animations/>
                                     <constraints>
-                                        <constraint firstItem="1kH-sR-21T" firstAttribute="centerY" secondItem="vNF-JO-sdb" secondAttribute="centerY" id="7P5-Fh-9RA"/>
                                         <constraint firstItem="NQI-Yh-RJo" firstAttribute="top" secondItem="vNF-JO-sdb" secondAttribute="top" constant="15" id="BLp-mj-nze"/>
                                         <constraint firstItem="1kH-sR-21T" firstAttribute="leading" secondItem="vNF-JO-sdb" secondAttribute="leading" constant="8" id="H9G-Gc-geP"/>
                                         <constraint firstItem="NQI-Yh-RJo" firstAttribute="leading" secondItem="1kH-sR-21T" secondAttribute="trailing" constant="8" id="Ifs-yb-TRQ"/>
@@ -107,6 +106,37 @@
                                 <animations/>
                                 <connections>
                                     <segue destination="JSg-sh-hhj" kind="push" identifier="Show Venue Detail Segue" id="117-3X-Cbt"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="All Venues Cell" textLabel="H5P-mx-6dM" detailTextLabel="PB7-Oh-TrS" style="IBUITableViewCellStyleSubtitle" id="X8W-uT-0AR">
+                                <rect key="frame" x="0.0" y="164" width="320" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="X8W-uT-0AR" id="bKC-yP-n3q">
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="49.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="H5P-mx-6dM">
+                                            <rect key="frame" x="15" y="9" width="31.5" height="19.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PB7-Oh-TrS">
+                                            <rect key="frame" x="15" y="28.5" width="40.5" height="13.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <animations/>
+                                </tableViewCellContentView>
+                                <animations/>
+                                <connections>
+                                    <segue destination="JSg-sh-hhj" kind="push" identifier="Show Venue Detail Segue" id="osV-V3-wKH"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -483,10 +513,10 @@
             </objects>
             <point key="canvasLocation" x="673" y="-290"/>
         </scene>
-        <!--View Controller-->
+        <!--Nearby View Controller-->
         <scene sceneID="ryZ-2a-2OD">
             <objects>
-                <viewController id="bZz-xe-SVo" sceneMemberID="viewController">
+                <viewController id="bZz-xe-SVo" customClass="NearbyViewController" customModule="Eateries" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nZK-ox-65U"/>
                         <viewControllerLayoutGuide type="bottom" id="YWe-x7-orj"/>
@@ -498,6 +528,9 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vv0-Ww-3e4">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <animations/>
+                                <connections>
+                                    <outlet property="delegate" destination="bZz-xe-SVo" id="PX8-hv-eGz"/>
+                                </connections>
                             </mapView>
                         </subviews>
                         <animations/>
@@ -510,6 +543,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4qf-tO-u7e"/>
+                    <connections>
+                        <outlet property="mapView" destination="Vv0-Ww-3e4" id="9mN-aZ-7eY"/>
+                        <segue destination="JSg-sh-hhj" kind="push" identifier="Show Venue Details" id="RDE-5V-Vi4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cVR-Z0-Z0l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -545,6 +582,6 @@
         <image name="Foursquare" width="300" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="117-3X-Cbt"/>
+        <segue reference="RDE-5V-Vi4"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -11,6 +11,7 @@
 		1F1EFFC61BD52F2600D69B0A /* Venue+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1EFFC31BD52F2600D69B0A /* Venue+CoreDataProperties.swift */; settings = {ASSET_TAGS = (); }; };
 		1F1EFFC71BD52F2600D69B0A /* VenueCollection+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1EFFC41BD52F2600D69B0A /* VenueCollection+CoreDataProperties.swift */; settings = {ASSET_TAGS = (); }; };
 		1F1EFFC91BD5399000D69B0A /* CollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1EFFC81BD5399000D69B0A /* CollectionTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		1F1EFFCB1BD559BB00D69B0A /* NearbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1EFFCA1BD559BB00D69B0A /* NearbyViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		1F3D018D1B17613E00E9B59E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3D018C1B17613E00E9B59E /* AppDelegate.swift */; };
 		1F3D01921B17613E00E9B59E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F3D01901B17613E00E9B59E /* Main.storyboard */; };
 		1F3D01941B17613E00E9B59E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F3D01931B17613E00E9B59E /* Images.xcassets */; };
@@ -31,6 +32,7 @@
 		1FD2F7A01B4B063D00BEC263 /* FSVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2F79F1B4B063D00BEC263 /* FSVenue.swift */; };
 		1FD2F7A21B4B1E9600BEC263 /* VenueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2F7A11B4B1E9600BEC263 /* VenueViewController.swift */; };
 		1FD2F7A41B4BFA3900BEC263 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD2F7A31B4BFA3900BEC263 /* CoreLocation.framework */; };
+		1FD390571BD56BC400F9D604 /* VenueMapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD390561BD56BC400F9D604 /* VenueMapAnnotation.swift */; settings = {ASSET_TAGS = (); }; };
 		1FD498A11B176C1600460D52 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD498A01B176C1600460D52 /* RootViewController.swift */; };
 		1FD498A51B17741300460D52 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1FD498A31B17741300460D52 /* DataModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
@@ -50,6 +52,7 @@
 		1F1EFFC31BD52F2600D69B0A /* Venue+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Venue+CoreDataProperties.swift"; path = "Data Model/Venue+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1F1EFFC41BD52F2600D69B0A /* VenueCollection+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "VenueCollection+CoreDataProperties.swift"; path = "Data Model/VenueCollection+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1F1EFFC81BD5399000D69B0A /* CollectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionTableViewCell.swift; path = "View Controllers/Custom Views/Cells/CollectionTableViewCell.swift"; sourceTree = "<group>"; };
+		1F1EFFCA1BD559BB00D69B0A /* NearbyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NearbyViewController.swift; path = "View Controllers/NearbyViewController.swift"; sourceTree = "<group>"; };
 		1F3D01871B17613E00E9B59E /* Eateries.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eateries.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F3D018B1B17613E00E9B59E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F3D018C1B17613E00E9B59E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +76,7 @@
 		1FD2F79F1B4B063D00BEC263 /* FSVenue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FSVenue.swift; path = "Data Model/Non-CoreData Objects/FSVenue.swift"; sourceTree = "<group>"; };
 		1FD2F7A11B4B1E9600BEC263 /* VenueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VenueViewController.swift; path = "View Controllers/VenueViewController.swift"; sourceTree = "<group>"; };
 		1FD2F7A31B4BFA3900BEC263 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		1FD390561BD56BC400F9D604 /* VenueMapAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VenueMapAnnotation.swift; path = "View Controllers/Custom Views/VenueMapAnnotation.swift"; sourceTree = "<group>"; };
 		1FD498A01B176C1600460D52 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RootViewController.swift; path = "View Controllers/RootViewController.swift"; sourceTree = "<group>"; };
 		1FD498A41B17741300460D52 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -172,6 +176,7 @@
 		1FB084A31B2A358A00E6EE94 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				1FD3904F1BD55E7200F9D604 /* Map Annotations */,
 				1FB084A61B2A35C800E6EE94 /* Cells */,
 			);
 			name = "Custom Views";
@@ -196,6 +201,14 @@
 			name = "Non-CoreData Objects";
 			sourceTree = "<group>";
 		};
+		1FD3904F1BD55E7200F9D604 /* Map Annotations */ = {
+			isa = PBXGroup;
+			children = (
+				1FD390561BD56BC400F9D604 /* VenueMapAnnotation.swift */,
+			);
+			name = "Map Annotations";
+			sourceTree = "<group>";
+		};
 		1FD4989E1B176BED00460D52 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +218,7 @@
 				1F5FC1641B2CA0070055D7C1 /* VenueCollectionViewController.swift */,
 				1F5FC1661B2CA3220055D7C1 /* AddVenueViewController.swift */,
 				1FD2F7A11B4B1E9600BEC263 /* VenueViewController.swift */,
+				1F1EFFCA1BD559BB00D69B0A /* NearbyViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -365,9 +379,11 @@
 				1F5FC1691B2CA5260055D7C1 /* VenueCell.swift in Sources */,
 				1FD2F7A21B4B1E9600BEC263 /* VenueViewController.swift in Sources */,
 				1F1EFFC61BD52F2600D69B0A /* Venue+CoreDataProperties.swift in Sources */,
+				1FD390571BD56BC400F9D604 /* VenueMapAnnotation.swift in Sources */,
 				1F1EFFC91BD5399000D69B0A /* CollectionTableViewCell.swift in Sources */,
 				1FB0849F1B29FDB700E6EE94 /* NewVenueCollectionViewController.swift in Sources */,
 				1FD498A11B176C1600460D52 /* RootViewController.swift in Sources */,
+				1F1EFFCB1BD559BB00D69B0A /* NearbyViewController.swift in Sources */,
 				1F1EFFC51BD52F2600D69B0A /* VenueAddress+CoreDataProperties.swift in Sources */,
 				1F447B041B4CA0DA00DD15B7 /* VenueDetailCell.swift in Sources */,
 				1FD2F7A01B4B063D00BEC263 /* FSVenue.swift in Sources */,

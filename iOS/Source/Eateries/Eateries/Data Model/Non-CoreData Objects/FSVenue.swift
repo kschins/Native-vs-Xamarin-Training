@@ -12,6 +12,7 @@ import CoreData
 class FSVenue {
     let venueID : String
     let name : String
+    let mainVenueCollectionName : String
     var website : String?
     var telephone : String?
     var twitter : String?
@@ -37,6 +38,9 @@ class FSVenue {
         // name
         self.name = venue["name"] as! String
     
+        // main venue collection name
+        self.mainVenueCollectionName = ""
+        
         // website
         if let url = venue["url"] as? String {
             self.website = url
@@ -92,6 +96,7 @@ class FSVenue {
         self.website = venue.website
         self.twitter = venue.twitter
         self.favorite = venue.favorite!.boolValue
+        self.mainVenueCollectionName = venue.mainVenueCollectionName!
         
         // address
         self.address = venue.address!.street
@@ -107,6 +112,7 @@ class FSVenue {
         let venue = Venue.insertNewObject(moc)
         venue.name = self.name
         venue.venueID = self.venueID
+        venue.mainVenueCollectionName = self.mainVenueCollectionName
         
         if let phone = self.telephone {
             venue.telephone = phone

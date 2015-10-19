@@ -168,6 +168,10 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
             let navViewController = segue.destinationViewController as! UINavigationController
             let newVenueCollectionViewController = navViewController.viewControllers.first as! NewVenueCollectionViewController
             newVenueCollectionViewController.delegate = self
+        } else if segue.identifier == "Show Nearby Places" {
+            let nearbyViewController = segue.destinationViewController as! NearbyViewController
+            let allPlacesCollection = venueCollections[allPlacesRow]
+            nearbyViewController.allVenues = allPlacesCollection.venues?.allObjects as? [Venue]
         }
     }
     

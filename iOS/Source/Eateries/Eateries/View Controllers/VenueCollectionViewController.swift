@@ -34,13 +34,24 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Venue Cell", forIndexPath: indexPath) 
+        if (allPlacesCollection == venueCollection) {
+            let cell = tableView.dequeueReusableCellWithIdentifier("All Venues Cell", forIndexPath: indexPath)
+            
+            // configure cell...
+            let venue = venueCollection!.venues!.allObjects[indexPath.row] as? Venue
+            cell.textLabel?.text = venue?.name
+            cell.detailTextLabel?.text = venue?.mainVenueCollectionName
+            
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("Venue Cell", forIndexPath: indexPath)
 
-        // Configure the cell...
-        let venue = venueCollection!.venues!.allObjects[indexPath.row] as? Venue
-        cell.textLabel?.text = venue?.name
-        
-        return cell
+            // Configure the cell...
+            let venue = venueCollection!.venues!.allObjects[indexPath.row] as? Venue
+            cell.textLabel?.text = venue?.name
+            
+            return cell
+        }
     }
 
     // Override to support conditional editing of the table view.
@@ -142,6 +153,7 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
         
         // setup new venue - add collection
         let venue = newVenue.createVenue(managedContext)
+        venue.mainVenueCollectionName = venueCollection?.name
         
         // add venue to necessary collections
         venueCollection?.addVenue(venue)
