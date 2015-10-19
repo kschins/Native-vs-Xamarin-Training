@@ -39,4 +39,9 @@ extension VenueCollection {
         let venues = self.mutableSetValueForKey("venues")
         venues.removeObject(venue)
     }
+    
+    func removeAllVenues() {
+        let venues = self.mutableSetValueForKey("venues")
+        venues.removeAllObjects()
+    }
 }

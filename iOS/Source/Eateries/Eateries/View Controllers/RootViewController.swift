@@ -120,6 +120,9 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
         
         // perform the right segue
         performSegueWithIdentifier(segueName, sender: nil)
+        
+        // deselect
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 
     // Override to support conditional editing of the table view.
@@ -135,17 +138,27 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            // delete from core data - can only delete from this section so need to add 2
+            // delete from core data - can only delete from this section so need to add non-editable row count
             let objectToDelete = venueCollections[indexPath.row + nonEditableRows]
             let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             let managedContext = appDelegate.managedObjectContext!
             managedContext.deleteObject(objectToDelete)
+            
+            // need to remove venues from all places and favorites
+            let allPlacesCollection = venueCollections[allPlacesRow]
+            let favoritesCollection = venueCollections[favoritesRow]
+            
+            for venue in (objectToDelete.venues?.allObjects)! {
+                allPlacesCollection.removeVenue(venue as! Venue)
+                favoritesCollection.removeVenue(venue as! Venue)
+            }
             
             // save
             appDelegate.saveContext()
             
             // delete the row from the data source
             venueCollections.removeAtIndex(indexPath.row + nonEditableRows)
+            
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
     }

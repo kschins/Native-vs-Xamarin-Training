@@ -67,6 +67,9 @@ class NearbyViewController: UIViewController, MKMapViewDelegate {
         
         // now display nearby venues, if any, within region
         displayNearbyVenues(userLocation.location!)
+        
+        // set delegate to nil to stop getting location updates
+        mapView.delegate = nil
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
