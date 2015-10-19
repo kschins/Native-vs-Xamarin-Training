@@ -144,7 +144,7 @@ class NewVenueCollectionViewController: UIViewController, UITableViewDataSource,
             let managedContext = appDelegate.managedObjectContext!
             let newCollection = VenueCollection.insertNewObject(managedContext)
             newCollection.name = nameTextField.text!
-            newCollection.iconImageName = iconNames[selectedIcon!] as! String
+            newCollection.iconImageName = iconNames[selectedIcon!] as? String
             newCollection.creationDate = NSDate()
             newCollection.canDelete = NSNumber(bool: true)
             

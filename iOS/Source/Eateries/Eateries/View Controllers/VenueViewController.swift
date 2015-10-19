@@ -87,7 +87,7 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
             cell.headerLabel?.text = NSLocalizedString("WEBSITE", comment: "WEBSITE")
             
             if let website = venue?.website {
-                cell.infoLabel?.text = "@\(website)"
+                cell.infoLabel?.text = website
             } else {
                 cell.infoLabel?.text = ""
             }

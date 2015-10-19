@@ -15,6 +15,7 @@ class FSVenue {
     var website : String?
     var telephone : String?
     var twitter : String?
+    var favorite : Bool?
     
     // address
     var hasAddress = true
@@ -40,6 +41,9 @@ class FSVenue {
         if let url = venue["url"] as? String {
             self.website = url
         }
+        
+        // favorite
+        self.favorite = false
         
         // contact
         if let contact = venue["contact"] as? [String : AnyObject]
@@ -82,20 +86,21 @@ class FSVenue {
     }
     
     init(venue: Venue) {
-        self.name = venue.name
-        self.venueID = venue.venueID
+        self.name = venue.name!
+        self.venueID = venue.venueID!
         self.telephone = venue.telephone
         self.website = venue.website
         self.twitter = venue.twitter
+        self.favorite = venue.favorite?.boolValue
         
         // address
-        self.address = venue.address.street
-        self.city = venue.address.city
-        self.state = venue.address.state
-        self.country = venue.address.country
-        self.postalCode = venue.address.postalCode
-        self.latitude = venue.address.latitude.doubleValue
-        self.longitude = venue.address.longitude.doubleValue
+        self.address = venue.address!.street
+        self.city = venue.address!.city
+        self.state = venue.address!.state
+        self.country = venue.address!.country
+        self.postalCode = venue.address!.postalCode
+        self.latitude = venue.address!.latitude!.doubleValue
+        self.longitude = venue.address!.longitude!.doubleValue
     }
     
     func createVenue(moc: NSManagedObjectContext) -> Venue {
@@ -114,6 +119,9 @@ class FSVenue {
         if let url = self.website {
             venue.website = url
         }
+        
+        // favorite
+        venue.favorite = NSNumber(bool: self.favorite!)
         
         // create address
         let venueAddress = VenueAddress.insertNewObject(moc)

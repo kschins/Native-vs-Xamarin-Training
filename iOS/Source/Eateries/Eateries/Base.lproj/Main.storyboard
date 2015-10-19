@@ -15,25 +15,44 @@
                         <animations/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Venue Collection Cell" textLabel="cGw-pw-cdL" style="IBUITableViewCellStyleDefault" id="0vO-pt-5bF">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Venue Collection Cell" id="0vO-pt-5bF" customClass="CollectionTableViewCell" customModule="Eateries" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="114" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0vO-pt-5bF" id="vNF-JO-sdb">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="49.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cGw-pw-cdL">
-                                            <rect key="frame" x="15" y="0.0" width="270" height="49.5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collection Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NQI-Yh-RJo">
+                                            <rect key="frame" x="41" y="15" width="246" height="21"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1kH-sR-21T">
+                                            <rect key="frame" x="8" y="12" width="25" height="25"/>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="25" id="slv-fE-tNW"/>
+                                                <constraint firstAttribute="width" constant="25" id="wRi-DE-dnO"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <animations/>
+                                    <constraints>
+                                        <constraint firstItem="1kH-sR-21T" firstAttribute="centerY" secondItem="vNF-JO-sdb" secondAttribute="centerY" id="7P5-Fh-9RA"/>
+                                        <constraint firstItem="NQI-Yh-RJo" firstAttribute="top" secondItem="vNF-JO-sdb" secondAttribute="top" constant="15" id="BLp-mj-nze"/>
+                                        <constraint firstItem="1kH-sR-21T" firstAttribute="leading" secondItem="vNF-JO-sdb" secondAttribute="leading" constant="8" id="H9G-Gc-geP"/>
+                                        <constraint firstItem="NQI-Yh-RJo" firstAttribute="leading" secondItem="1kH-sR-21T" secondAttribute="trailing" constant="8" id="Ifs-yb-TRQ"/>
+                                        <constraint firstItem="1kH-sR-21T" firstAttribute="top" secondItem="vNF-JO-sdb" secondAttribute="top" constant="12" id="g2s-GM-Rsx"/>
+                                        <constraint firstAttribute="trailing" secondItem="NQI-Yh-RJo" secondAttribute="trailing" id="tLU-ek-15h"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <animations/>
+                                <connections>
+                                    <outlet property="collectionImageView" destination="1kH-sR-21T" id="rM7-0s-cn2"/>
+                                    <outlet property="collectionNameLabel" destination="NQI-Yh-RJo" id="30d-yE-D3l"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

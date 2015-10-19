@@ -11,6 +11,7 @@ import UIKit
 class VenueCollectionViewController: UITableViewController, VenueAddedToCollectionProtocol {
 
     var venueCollection : VenueCollection?
+    var allPlacesCollection : VenueCollection?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,14 +29,14 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
-        return venueCollection!.venues.count
+        return venueCollection!.venues!.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Venue Cell", forIndexPath: indexPath) 
 
         // Configure the cell...
-        let venue = venueCollection!.venues.allObjects[indexPath.row] as? Venue
+        let venue = venueCollection!.venues!.allObjects[indexPath.row] as? Venue
         cell.textLabel?.text = venue?.name
         
         return cell
@@ -43,33 +44,43 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
 
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
+        if (allPlacesCollection == venueCollection) {
+            return false
+        } else {
+            return true
+        }
     }
 
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // delete from core data - can only delete from this section so need to add 2
-            let objectToDelete = venueCollection?.venues.allObjects[indexPath.row] as! Venue
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let venue = venueCollection!.venues!.allObjects[indexPath.row] as? Venue
+        
+        let favoriteAction = UITableViewRowAction(style: .Normal, title: "Favorite") { (action, indexPath) -> Void in
+            self.editing = false
+        }
+        
+        let deleteAction = UITableViewRowAction(style: .Default, title: "Delete") { (action, indexPath) -> Void in
+            // delete from core data - can only delete from this section
             let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             let managedContext = appDelegate.managedObjectContext!
-            managedContext.deleteObject(objectToDelete)
+            managedContext.deleteObject(venue!)
             
             // save
             appDelegate.saveContext()
             
             // delete the row from the data source
-            venueCollection?.removeVenue(objectToDelete)
+            self.venueCollection?.removeVenue(venue!)
+            self.allPlacesCollection?.removeVenue(venue!)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
+        
+        return [deleteAction, favoriteAction]
     }
 
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "Show Venue Detail Segue" {
             let selectedIndexPath = tableView.indexPathForSelectedRow
-            let selectedVenue = venueCollection?.venues.allObjects[selectedIndexPath!.row] as? Venue
+            let selectedVenue = venueCollection?.venues!.allObjects[selectedIndexPath!.row] as? Venue
             let venueVC = segue.destinationViewController as! VenueViewController
             venueVC.savedVenue = selectedVenue
         } else if segue.identifier == "Add Venue Segue" {
@@ -90,6 +101,7 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
         
         // add venue to necessary collections
         venueCollection?.addVenue(venue)
+        allPlacesCollection?.addVenue(venue)
         
         // save
         appDelegate.saveContext()

@@ -99,11 +99,11 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
         
         let venueCollection = venueCollections[currentCollection]
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Venue Collection Cell", forIndexPath: indexPath) 
+        let cell = tableView.dequeueReusableCellWithIdentifier("Venue Collection Cell", forIndexPath: indexPath) as! CollectionTableViewCell
             
         // Configure the cell...
-        cell.textLabel?.text = venueCollection.name
-        cell.imageView?.image = UIImage(named: venueCollection.iconImageName)
+        cell.collectionNameLabel?.text = venueCollection.name
+        cell.collectionImageView?.image = UIImage(named: venueCollection.iconImageName!)
         
         return cell
     }
@@ -162,6 +162,7 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
             
             let venueCollectionViewController = segue.destinationViewController as! VenueCollectionViewController
             venueCollectionViewController.venueCollection = venueCollections[currentCollection]
+            venueCollectionViewController.allPlacesCollection = venueCollections[allPlacesRow]
         } else if segue.identifier == "Add New Collection Segue" {
             let navViewController = segue.destinationViewController as! UINavigationController
             let newVenueCollectionViewController = navViewController.viewControllers.first as! NewVenueCollectionViewController
