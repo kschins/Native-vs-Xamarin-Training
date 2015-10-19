@@ -15,7 +15,7 @@ class FSVenue {
     var website : String?
     var telephone : String?
     var twitter : String?
-    var favorite : Bool?
+    let favorite : Bool
     
     // address
     var hasAddress = true
@@ -91,7 +91,7 @@ class FSVenue {
         self.telephone = venue.telephone
         self.website = venue.website
         self.twitter = venue.twitter
-        self.favorite = venue.favorite?.boolValue
+        self.favorite = venue.favorite!.boolValue
         
         // address
         self.address = venue.address!.street
@@ -121,7 +121,7 @@ class FSVenue {
         }
         
         // favorite
-        venue.favorite = NSNumber(bool: self.favorite!)
+        venue.favorite = NSNumber(bool: self.favorite)
         
         // create address
         let venueAddress = VenueAddress.insertNewObject(moc)

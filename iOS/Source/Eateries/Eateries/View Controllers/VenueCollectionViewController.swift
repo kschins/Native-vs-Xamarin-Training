@@ -12,12 +12,13 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
 
     var venueCollection : VenueCollection?
     var allPlacesCollection : VenueCollection?
+    var favoritesCollection : VenueCollection?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // title
-        title = venueCollection!.valueForKey("name") as?  String
+        title = venueCollection!.valueForKey("name") as? String
     }
 
     // MARK: - Table view data source
@@ -54,26 +55,69 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         let venue = venueCollection!.venues!.allObjects[indexPath.row] as? Venue
         
-        let favoriteAction = UITableViewRowAction(style: .Normal, title: "Favorite") { (action, indexPath) -> Void in
-            self.editing = false
-        }
+        var favoriteAction: UITableViewRowAction
         
-        let deleteAction = UITableViewRowAction(style: .Default, title: "Delete") { (action, indexPath) -> Void in
-            // delete from core data - can only delete from this section
-            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-            let managedContext = appDelegate.managedObjectContext!
-            managedContext.deleteObject(venue!)
+        if favoritesCollection == venueCollection {
+            favoriteAction = UITableViewRowAction(style: .Default, title: "Remove") { (action, indexPath) -> Void in
+                // remove venue from favorites collection
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                venue?.favorite = NSNumber(bool: false)
+                self.favoritesCollection?.removeVenue(venue!)
+                
+                // save
+                appDelegate.saveContext()
+                
+                // remove row
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            }
             
-            // save
-            appDelegate.saveContext()
+            return [favoriteAction]
+        } else {
+            if (venue?.favorite?.boolValue == true) {
+                favoriteAction = UITableViewRowAction(style: .Normal, title: "Un-Favorite") { (action, indexPath) -> Void in
+                    // remove venue from favorites collection
+                    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                    venue?.favorite = NSNumber(bool: false)
+                    self.favoritesCollection?.removeVenue(venue!)
+                    
+                    // save
+                    appDelegate.saveContext()
+                    
+                    // remove row
+                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                }
+            } else {
+                favoriteAction = UITableViewRowAction(style: .Normal, title: "Favorite") { (action, indexPath) -> Void in
+                    self.editing = false
+                    
+                    // add venue to favorites collection
+                    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                    venue?.favorite = NSNumber(bool: true)
+                    self.favoritesCollection?.addVenue(venue!)
+                    
+                    // save
+                    appDelegate.saveContext()
+                }
+            }
             
-            // delete the row from the data source
-            self.venueCollection?.removeVenue(venue!)
-            self.allPlacesCollection?.removeVenue(venue!)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            let deleteAction = UITableViewRowAction(style: .Default, title: "Delete") { (action, indexPath) -> Void in
+                // delete from core data - can only delete from this section
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                let managedContext = appDelegate.managedObjectContext!
+                managedContext.deleteObject(venue!)
+                
+                // save
+                appDelegate.saveContext()
+                
+                // delete the row from the data source
+                self.venueCollection?.removeVenue(venue!)
+                self.allPlacesCollection?.removeVenue(venue!)
+                self.favoritesCollection?.removeVenue(venue!)
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            }
+            
+            return [deleteAction, favoriteAction]
         }
-        
-        return [deleteAction, favoriteAction]
     }
 
     // MARK: - Navigation

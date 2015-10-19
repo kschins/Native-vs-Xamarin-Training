@@ -163,6 +163,7 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
             let venueCollectionViewController = segue.destinationViewController as! VenueCollectionViewController
             venueCollectionViewController.venueCollection = venueCollections[currentCollection]
             venueCollectionViewController.allPlacesCollection = venueCollections[allPlacesRow]
+            venueCollectionViewController.favoritesCollection = venueCollections[favoritesRow]
         } else if segue.identifier == "Add New Collection Segue" {
             let navViewController = segue.destinationViewController as! UINavigationController
             let newVenueCollectionViewController = navViewController.viewControllers.first as! NewVenueCollectionViewController
