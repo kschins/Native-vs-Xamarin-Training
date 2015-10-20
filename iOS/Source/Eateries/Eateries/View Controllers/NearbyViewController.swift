@@ -13,7 +13,7 @@ class NearbyViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapView : MKMapView?
     var allVenues: [Venue]?
-    
+    var initialUserLocation: CLLocation?
     let regionRadius: CLLocationDistance = 2000
 
     override func viewDidLoad() {
@@ -62,14 +62,16 @@ class NearbyViewController: UIViewController, MKMapViewDelegate {
     // MARK: - MKMapViewDelegate
     
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
-        // zoom into current location and show if saved places are nearby
-        centerMapOnLocation(userLocation.location!)
-        
-        // now display nearby venues, if any, within region
-        displayNearbyVenues(userLocation.location!)
-        
-        // set delegate to nil to stop getting location updates
-        mapView.delegate = nil
+        if initialUserLocation == nil {
+            // zoom into current location and show if saved places are nearby
+            centerMapOnLocation(userLocation.location!)
+            
+            // now display nearby venues, if any, within region
+            displayNearbyVenues(userLocation.location!)
+            
+            // set delegate to nil to stop getting location updates
+            initialUserLocation = userLocation.location!
+        }
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {

@@ -20,7 +20,8 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
     var venue: FSVenue?
     var addVenue = false
     var delegate: VenueAddedProtocol?
-
+    var loadingVenueInformation = true
+    
     // constants
     let venueNameRow = 0
     let venuePhoneRow = 1
@@ -36,7 +37,11 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
 
         if let venue = venue {
             // fetch all details for this venue since not all vital information is sent when searching venues
+            
             venueSearchAPI.fetchVenue(venue.venueID, completionClosure: {(venue, success) in
+                // no longer loading
+                self.loadingVenueInformation = false
+                
                 // only one venue
                 if success {
                     self.venue = venue
@@ -48,9 +53,16 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
                 }
             })
         } else {
+            // not loading anything
+            loadingVenueInformation = false
+            
             // remove save button since just viewing details
             if !addVenue {
                 navigationItem.rightBarButtonItem = nil
+                
+                // set right navigation item to share button
+                let shareItem = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "shareButtonTapped")
+                navigationItem.rightBarButtonItem = shareItem
             }
             
             venue = FSVenue(venue: savedVenue!)
@@ -68,7 +80,11 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
-        return venueDetailRows
+        if loadingVenueInformation {
+            return 0
+        } else {
+            return venueDetailRows
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -166,6 +182,19 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
         let svc = SFSafariViewController(URL: NSURL(string: urlString)!)
         svc.delegate = self
         self.presentViewController(svc, animated: true, completion: nil)
+    }
+    
+    func shareButtonTapped() {
+        
+        let textToShare = venue!.name
+        
+        if let linkToShare = venue!.website {
+            let shareSheet = UIActivityViewController(activityItems: [textToShare, linkToShare], applicationActivities: nil)
+            presentViewController(shareSheet, animated: true, completion: nil)
+        } else {
+            let shareSheet = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
+            presentViewController(shareSheet, animated: true, completion: nil)
+        }
     }
     
     // MARK: - SFSafariViewControllerDelegate

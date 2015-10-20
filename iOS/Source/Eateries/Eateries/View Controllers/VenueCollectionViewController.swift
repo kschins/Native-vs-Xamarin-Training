@@ -34,11 +34,13 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if (allPlacesCollection == venueCollection) {
+        // grab current venue
+        let venue = venueCollection!.venues!.allObjects[indexPath.row] as? Venue
+
+        if (allPlacesCollection == venueCollection || favoritesCollection == venueCollection) {
             let cell = tableView.dequeueReusableCellWithIdentifier("All Venues Cell", forIndexPath: indexPath)
             
             // configure cell...
-            let venue = venueCollection!.venues!.allObjects[indexPath.row] as? Venue
             cell.textLabel?.text = venue?.name
             cell.detailTextLabel?.text = venue?.mainVenueCollectionName
             
@@ -47,7 +49,6 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
             let cell = tableView.dequeueReusableCellWithIdentifier("Venue Cell", forIndexPath: indexPath)
 
             // Configure the cell...
-            let venue = venueCollection!.venues!.allObjects[indexPath.row] as? Venue
             cell.textLabel?.text = venue?.name
             
             return cell
