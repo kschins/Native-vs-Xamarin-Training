@@ -10,9 +10,9 @@ import UIKit
 
 class VenueCollectionViewController: UITableViewController, VenueAddedToCollectionProtocol {
 
-    var venueCollection : VenueCollection?
-    var allPlacesCollection : VenueCollection?
-    var favoritesCollection : VenueCollection?
+    var venueCollection : VenueCollection!
+    var allPlacesCollection : VenueCollection!
+    var favoritesCollection : VenueCollection!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,15 +138,15 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
 
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "Show Venue Detail Segue" {
+        if segue.identifier == "Add Venue Segue" {
+            let navViewController = segue.destinationViewController as! UINavigationController
+            let newVenueViewController = navViewController.viewControllers.first as! AddVenueViewController
+            newVenueViewController.delegate = self
+        } else {
             let selectedIndexPath = tableView.indexPathForSelectedRow
             let selectedVenue = venueCollection?.venues!.allObjects[selectedIndexPath!.row] as? Venue
             let venueVC = segue.destinationViewController as! VenueViewController
             venueVC.savedVenue = selectedVenue
-        } else if segue.identifier == "Add Venue Segue" {
-            let navViewController = segue.destinationViewController as! UINavigationController
-            let newVenueViewController = navViewController.viewControllers.first as! AddVenueViewController
-            newVenueViewController.delegate = self
         }
     }
     

@@ -27,20 +27,25 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
     let venuePhoneRow = 1
     let venueWebsiteRow = 2
     let venueTwitterRow = 3
-    let venueAddressRow = 4
-    let venueDetailRows = 5
+    let venuePriceRow = 4
+    let venueAddressRow = 5
+    let venueDetailRows = 6
     let venueSearchAPI = VenueSearchAPI()
     
     // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         if let venue = venue {
             // fetch all details for this venue since not all vital information is sent when searching venues
+            PKHUD.sharedHUD.contentView = PKHUDProgressView()
+            PKHUD.sharedHUD.show()
             
             venueSearchAPI.fetchVenue(venue.venueID, completionClosure: {(venue, success) in
                 // no longer loading
                 self.loadingVenueInformation = false
+                PKHUD.sharedHUD.hide(animated: false)
                 
                 // only one venue
                 if success {
@@ -73,6 +78,7 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
     }
     
     // MARK: - Table view data source
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // Return the number of sections.
         return 1
@@ -115,6 +121,10 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
             } else {
                 cell.infoLabel?.text = ""
             }
+        case venuePriceRow:
+            cell.selectionStyle = .None
+            cell.headerLabel?.text = NSLocalizedString("PRICE", comment: "PRICE")
+            cell.infoLabel?.attributedText = venue?.displayPrice()
         case venueAddressRow:
             cell.headerLabel?.text = NSLocalizedString("ADDRESS", comment: "ADDRESS")
             cell.infoLabel?.text = venue?.displayAddress()
@@ -169,6 +179,7 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
     }
     
     // MARK: - IBActions
+    
     @IBAction func saveVenue() {
         // pass venue to be added to delegate
         delegate?.newVenueAdded(venue!)
@@ -185,7 +196,6 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
     }
     
     func shareButtonTapped() {
-        
         let textToShare = venue!.name
         
         if let linkToShare = venue!.website {
@@ -198,6 +208,7 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
     }
     
     // MARK: - SFSafariViewControllerDelegate
+    
     func safariViewControllerDidFinish(controller: SFSafariViewController) {
         controller.dismissViewControllerAnimated(true, completion: nil)
     }

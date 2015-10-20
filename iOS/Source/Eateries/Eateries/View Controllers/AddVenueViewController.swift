@@ -203,6 +203,8 @@ class AddVenueViewController: UITableViewController, UITextFieldDelegate, VenueA
             if currentLocation == nil {
                 // user must manually enter in location, or we need to fetch for the current location again
                 print("No location to use for search...")
+                self.activityIndicator.stopAnimating()
+                self.searchLabel.hidden = false
             } else {
                 // search by lat and long
                 let latitude = currentLocation!.coordinate.latitude

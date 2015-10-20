@@ -4,6 +4,7 @@
         <attribute name="favorite" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="mainVenueCollectionName" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="telephone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="twitter" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="venueID" optional="YES" attributeType="String" syncable="YES"/>
@@ -30,7 +31,7 @@
         <relationship name="venues" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Venue" inverseName="venueCollection" inverseEntity="Venue" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Venue" positionX="-63" positionY="-18" width="128" height="180"/>
+        <element name="Venue" positionX="-63" positionY="-18" width="128" height="195"/>
         <element name="VenueAddress" positionX="-36" positionY="9" width="128" height="180"/>
         <element name="VenueCollection" positionX="-54" positionY="-9" width="128" height="120"/>
     </elements>

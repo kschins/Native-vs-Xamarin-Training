@@ -19,6 +19,7 @@ class Venue: NSManagedObject {
     @NSManaged var twitter: String?
     @NSManaged var venueID: String?
     @NSManaged var website: String?
+    @NSManaged var price: String?
     @NSManaged var mainVenueCollectionName: String?
     @NSManaged var favorite: NSNumber?
     @NSManaged var address: VenueAddress?

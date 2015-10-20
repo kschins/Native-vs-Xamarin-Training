@@ -10,9 +10,11 @@ import UIKit
 import CoreData
 import Fabric
 import Crashlytics
+import WatchConnectivity
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+
+class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
 
     var window: UIWindow?
 
@@ -20,6 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         Fabric.with([Crashlytics()])
 
+        // watch kit connectivity
+        if (WCSession.isSupported()) {
+            let watchSession = WCSession.defaultSession()
+            watchSession.delegate = self
+            watchSession.activateSession()
+        }
+        
         return true
     }
 

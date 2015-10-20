@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 class FSVenue {
     let venueID : String
@@ -16,6 +17,7 @@ class FSVenue {
     var website : String?
     var telephone : String?
     var twitter : String?
+    var price : String?
     let favorite : Bool
     
     // address
@@ -46,25 +48,34 @@ class FSVenue {
             self.website = url
         }
         
+        // price
+        self.price = "$"
+        if let attributes = venue["attributes"] as? [String : AnyObject] {            
+            if let groups = attributes["groups"] as? [AnyObject] {
+                for item in groups {
+                    if let name = item["name"] as? String {
+                        if name == "Price" {
+                            self.price = item["summary"] as? String
+                        }
+                    }
+                }
+            }
+        }
+        
         // favorite
         self.favorite = false
         
         // contact
-        if let contact = venue["contact"] as? [String : AnyObject]
-        {
-            if let phone = contact["formattedPhone"] as? String
-            {
+        if let contact = venue["contact"] as? [String : AnyObject] {
+            if let phone = contact["formattedPhone"] as? String {
                 self.telephone = phone
             } else {
                 validVenue = false
             }
             
-            if let handle = contact["twitter"] as? String
-            {
+            if let handle = contact["twitter"] as? String {
                 self.twitter = handle
             }
-        } else {
-            //validVenue = false
         }
         
         // location
@@ -95,6 +106,7 @@ class FSVenue {
         self.telephone = venue.telephone
         self.website = venue.website
         self.twitter = venue.twitter
+        self.price = venue.price
         self.favorite = venue.favorite!.boolValue
         self.mainVenueCollectionName = venue.mainVenueCollectionName!
         
@@ -124,6 +136,10 @@ class FSVenue {
         
         if let url = self.website {
             venue.website = url
+        }
+        
+        if let price = self.price {
+            venue.price = price
         }
         
         // favorite
@@ -160,5 +176,26 @@ class FSVenue {
         displayAddress += city! + ", " + state! + " " + postalCode!
         
         return displayAddress
+    }
+    
+    func displayPrice() -> NSAttributedString {
+        let greyDollarSignAttribute = [NSForegroundColorAttributeName: UIColor.lightGrayColor()]
+        let greyDollarSignString = NSMutableAttributedString(string: "$", attributes: greyDollarSignAttribute)
+        let attributedPriceString = NSMutableAttributedString(string: price!)
+        
+        if price?.characters.count == 0 {
+            return NSAttributedString(string: "N/A")
+        } else if price?.characters.count == 1 {
+            attributedPriceString.appendAttributedString(greyDollarSignString)
+            attributedPriceString.appendAttributedString(greyDollarSignString)
+            attributedPriceString.appendAttributedString(greyDollarSignString)
+        } else if price?.characters.count == 2 {
+            attributedPriceString.appendAttributedString(greyDollarSignString)
+            attributedPriceString.appendAttributedString(greyDollarSignString)
+        } else if price?.characters.count == 3 {
+            attributedPriceString.appendAttributedString(greyDollarSignString)
+        }
+        
+        return attributedPriceString
     }
 }
