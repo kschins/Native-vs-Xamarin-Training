@@ -17,6 +17,7 @@ class AddVenueViewController: UITableViewController, UITextFieldDelegate, VenueA
 
     // variables
     var searchedPlaces = [FSVenue]()
+    var initialLoad = true
     var currentLocation: CLLocation?
     var delegate: VenueAddedToCollectionProtocol?
     weak var queryTextField : UITextField!
@@ -74,7 +75,10 @@ class AddVenueViewController: UITableViewController, UITextFieldDelegate, VenueA
         super.viewDidAppear(animated)
         
         // show keyboard for name
-        queryTextField.becomeFirstResponder()
+        if initialLoad {
+            queryTextField.becomeFirstResponder()
+            initialLoad = false
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {

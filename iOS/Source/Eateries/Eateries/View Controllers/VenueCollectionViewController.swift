@@ -13,43 +13,50 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
     var venueCollection : VenueCollection!
     var allPlacesCollection : VenueCollection!
     var favoritesCollection : VenueCollection!
+    var venues = [Venue]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // title
         title = venueCollection!.valueForKey("name") as? String
+        
+        // sort venues alphabetically to display better
+        venues = sortVenuesAlphabetically()
     }
 
+    // MARK: - Private
+    
+    func sortVenuesAlphabetically() -> [Venue] {
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true);
+        
+        return venueCollection.venues?.sortedArrayUsingDescriptors([sortDescriptor]) as! [Venue]
+    }
+    
     // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // Return the number of sections.
-        return 1
-    }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
-        return venueCollection!.venues!.count
+        return venues.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // grab current venue
-        let venue = venueCollection!.venues!.allObjects[indexPath.row] as? Venue
+        let venue = venues[indexPath.row]
 
         if (allPlacesCollection == venueCollection || favoritesCollection == venueCollection) {
             let cell = tableView.dequeueReusableCellWithIdentifier("All Venues Cell", forIndexPath: indexPath)
             
             // configure cell...
-            cell.textLabel?.text = venue?.name
-            cell.detailTextLabel?.text = venue?.mainVenueCollectionName
+            cell.textLabel?.text = venue.name
+            cell.detailTextLabel?.text = venue.mainVenueCollectionName
             
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier("Venue Cell", forIndexPath: indexPath)
 
             // Configure the cell...
-            cell.textLabel?.text = venue?.name
+            cell.textLabel?.text = venue.name
             
             return cell
         }
@@ -69,7 +76,7 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
     }
 
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-        let venue = venueCollection!.venues!.allObjects[indexPath.row] as? Venue
+        let venue = venues[indexPath.row]
         
         var favoriteAction: UITableViewRowAction
         
@@ -77,8 +84,8 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
             favoriteAction = UITableViewRowAction(style: .Default, title: "Remove") { (action, indexPath) -> Void in
                 // remove venue from favorites collection
                 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                venue?.favorite = NSNumber(bool: false)
-                self.favoritesCollection?.removeVenue(venue!)
+                venue.favorite = NSNumber(bool: false)
+                self.favoritesCollection.removeVenue(venue)
                 
                 // save
                 appDelegate.saveContext()
@@ -89,12 +96,12 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
             
             return [favoriteAction]
         } else {
-            if (venue?.favorite?.boolValue == true) {
+            if (venue.favorite?.boolValue == true) {
                 favoriteAction = UITableViewRowAction(style: .Normal, title: "Un-Favorite") { (action, indexPath) -> Void in
                     // remove venue from favorites collection
                     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                    venue?.favorite = NSNumber(bool: false)
-                    self.favoritesCollection?.removeVenue(venue!)
+                    venue.favorite = NSNumber(bool: false)
+                    self.favoritesCollection.removeVenue(venue)
                     
                     // save
                     appDelegate.saveContext()
@@ -108,8 +115,8 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
                     
                     // add venue to favorites collection
                     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                    venue?.favorite = NSNumber(bool: true)
-                    self.favoritesCollection?.addVenue(venue!)
+                    venue.favorite = NSNumber(bool: true)
+                    self.favoritesCollection.addVenue(venue)
                     
                     // save
                     appDelegate.saveContext()
@@ -120,15 +127,15 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
                 // delete from core data - can only delete from this section
                 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                 let managedContext = appDelegate.managedObjectContext!
-                managedContext.deleteObject(venue!)
+                managedContext.deleteObject(venue)
                 
                 // save
                 appDelegate.saveContext()
                 
                 // delete the row from the data source
-                self.venueCollection?.removeVenue(venue!)
-                self.allPlacesCollection?.removeVenue(venue!)
-                self.favoritesCollection?.removeVenue(venue!)
+                self.venueCollection.removeVenue(venue)
+                self.allPlacesCollection.removeVenue(venue)
+                self.favoritesCollection.removeVenue(venue)
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             }
             
@@ -144,13 +151,14 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
             newVenueViewController.delegate = self
         } else {
             let selectedIndexPath = tableView.indexPathForSelectedRow
-            let selectedVenue = venueCollection?.venues!.allObjects[selectedIndexPath!.row] as? Venue
+            let selectedVenue = venues[selectedIndexPath!.row]
             let venueVC = segue.destinationViewController as! VenueViewController
             venueVC.savedVenue = selectedVenue
         }
     }
     
     // MARK: - VenueAddedToCollectionProtocol
+    
     func addVenueToCollection(newVenue: FSVenue) {
         // create Venue from FSVenue
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -158,15 +166,18 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
         
         // setup new venue - add collection
         let venue = newVenue.createVenue(managedContext)
-        venue.mainVenueCollectionName = venueCollection?.name
+        venue.mainVenueCollectionName = venueCollection.name
         
         // add venue to necessary collections
-        venueCollection?.addVenue(venue)
-        allPlacesCollection?.addVenue(venue)
+        venueCollection.addVenue(venue)
+        allPlacesCollection.addVenue(venue)
         
         // save
         appDelegate.saveContext()
         
+        // sort venues
+        venues = sortVenuesAlphabetically()
+
         // reload table view
         tableView.reloadData()
     }

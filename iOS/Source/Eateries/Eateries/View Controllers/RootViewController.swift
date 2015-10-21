@@ -21,6 +21,7 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
     let nearbyRow = 2
     
     // vars
+    var staticCollections = [VenueCollection]()
     var venueCollections = [VenueCollection]()
     
     override func viewDidLoad() {
@@ -192,6 +193,11 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
     func newVenueCollectionAdded(venueCollection: VenueCollection) {
         // add venue collection to array
         venueCollections.append(venueCollection)
+        
+        // sort venue collections
+        //venueCollections.sortInPlace({$0.name < $1.name})
+
+        // reload table view
         tableView.reloadData()
     }
 }

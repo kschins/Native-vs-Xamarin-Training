@@ -25,8 +25,8 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
     // constants
     let venueNameRow = 0
     let venuePhoneRow = 1
-    let venueWebsiteRow = 2
-    let venueTwitterRow = 3
+    let venueWebsiteRow = 2 // don't show this row if venue doesn't contain this information
+    let venueTwitterRow = 3 // don't show this row if venue doesn't contain this information
     let venuePriceRow = 4
     let venueAddressRow = 5
     let venueDetailRows = 6
