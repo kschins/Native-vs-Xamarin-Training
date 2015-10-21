@@ -16,10 +16,10 @@
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Venue Collection Cell" id="0vO-pt-5bF" customClass="CollectionTableViewCell" customModule="Eateries" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="114" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="113.5" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0vO-pt-5bF" id="vNF-JO-sdb">
-                                    <rect key="frame" x="0.0" y="0.0" width="287" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="49.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collection Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NQI-Yh-RJo">
@@ -86,7 +86,7 @@
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Venue Cell" textLabel="j0W-cC-yip" style="IBUITableViewCellStyleDefault" id="uvx-tG-3eB">
-                                <rect key="frame" x="0.0" y="114" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="113.5" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uvx-tG-3eB" id="whG-Ug-be2">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="49.5"/>
@@ -109,7 +109,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="All Venues Cell" textLabel="H5P-mx-6dM" detailTextLabel="PB7-Oh-TrS" style="IBUITableViewCellStyleSubtitle" id="X8W-uT-0AR">
-                                <rect key="frame" x="0.0" y="164" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="163.5" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="X8W-uT-0AR" id="bKC-yP-n3q">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="49.5"/>
@@ -168,10 +168,10 @@
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="MJm-uQ-Re1" customClass="VenueDetailCell" customModule="Eateries" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="114" width="320" height="55"/>
+                                <rect key="frame" x="0.0" y="113.5" width="320" height="55"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MJm-uQ-Re1" id="bGr-Bv-Vug">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="54.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NAME" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="blw-0J-IQY">
@@ -257,17 +257,17 @@
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Name Cell" id="i7o-vT-I1k">
-                                <rect key="frame" x="0.0" y="199" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="198.5" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="i7o-vT-I1k" id="Cs3-Wc-0GJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" tag="99" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name, category, or cuisine" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qDE-NV-CiF">
                                             <rect key="frame" x="15" y="7" width="291" height="30"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <textInputTraits key="textInputTraits"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no"/>
                                         </textField>
                                     </subviews>
                                     <animations/>
@@ -275,10 +275,10 @@
                                 <animations/>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Search Cell" id="kSx-bh-xFe">
-                                <rect key="frame" x="0.0" y="243" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="242.5" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kSx-bh-xFe" id="UnP-c7-TuY">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <activityIndicatorView hidden="YES" opaque="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="pTw-Ff-ngF">
@@ -312,10 +312,10 @@
                                 <animations/>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Venue Cell" id="RFE-4P-88P">
-                                <rect key="frame" x="0.0" y="287" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="286.5" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RFE-4P-88P" id="jwc-bh-irT">
-                                    <rect key="frame" x="0.0" y="0.0" width="287" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                 </tableViewCellContentView>
@@ -363,10 +363,10 @@
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Name Cell" id="btw-QO-uHP">
-                                        <rect key="frame" x="0.0" y="114" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="113.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="btw-QO-uHP" id="Av2-nM-loD">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" tag="99" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Upcoming Trip, Bars, Breakfast Spots" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GFs-45-5K5">
@@ -582,6 +582,6 @@
         <image name="Foursquare" width="300" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="osV-V3-wKH"/>
+        <segue reference="Q4m-pf-rk7"/>
     </inferredMetricsTieBreakers>
 </document>

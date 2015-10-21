@@ -17,7 +17,7 @@ protocol VenueAddedProtocol {
 class VenueViewController : UITableViewController, SFSafariViewControllerDelegate {
     
     var savedVenue: Venue?
-    var venue: FSVenue?
+    var venue: FSVenue!
     var addVenue = false
     var delegate: VenueAddedProtocol?
     var loadingVenueInformation = true
@@ -74,7 +74,7 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
         }
         
         // title
-        title = venue?.name
+        title = venue.name
     }
     
     // MARK: - Table view data source
@@ -89,6 +89,7 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
         if loadingVenueInformation {
             return 0
         } else {
+            
             return venueDetailRows
         }
     }
@@ -100,15 +101,15 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
         switch (indexPath.row) {
         case venueNameRow:
             cell.headerLabel?.text = NSLocalizedString("NAME", comment: "NAME")
-            cell.infoLabel?.text = venue?.name
+            cell.infoLabel?.text = venue.name
             cell.selectionStyle = .None
         case venuePhoneRow:
             cell.headerLabel?.text = NSLocalizedString("PHONE", comment: "PHONE")
-            cell.infoLabel?.text = venue?.telephone
+            cell.infoLabel?.text = venue.telephone
         case venueWebsiteRow:
             cell.headerLabel?.text = NSLocalizedString("WEBSITE", comment: "WEBSITE")
             
-            if let website = venue?.website {
+            if let website = venue.website {
                 cell.infoLabel?.text = website
             } else {
                 cell.infoLabel?.text = ""
@@ -116,7 +117,7 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
         case venueTwitterRow:
             cell.headerLabel?.text = NSLocalizedString("TWITTER", comment: "TWITTER")
             
-            if let twitter = venue?.twitter {
+            if let twitter = venue.twitter {
                 cell.infoLabel?.text = "@\(twitter)"
             } else {
                 cell.infoLabel?.text = ""
@@ -124,10 +125,10 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
         case venuePriceRow:
             cell.selectionStyle = .None
             cell.headerLabel?.text = NSLocalizedString("PRICE", comment: "PRICE")
-            cell.infoLabel?.attributedText = venue?.displayPrice()
+            cell.infoLabel?.attributedText = venue.displayPrice()
         case venueAddressRow:
             cell.headerLabel?.text = NSLocalizedString("ADDRESS", comment: "ADDRESS")
-            cell.infoLabel?.text = venue?.displayAddress()
+            cell.infoLabel?.text = venue.displayAddress()
         default:
             cell.headerLabel?.text = ""
             cell.infoLabel?.text = ""
@@ -140,19 +141,19 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
         switch (indexPath.row) {
         case venuePhoneRow:
             // call - if number is valid
-            let phone = venue?.strippedVenueTelephone()
-            UIApplication.sharedApplication().openURL(NSURL(string: "tel://" + phone!)!)
+            let phone = venue.strippedVenueTelephone()
+            UIApplication.sharedApplication().openURL(NSURL(string: "tel://" + phone)!)
         case venueWebsiteRow:
             // open safari
-            openWithSafariVC((venue?.website)!)
+            openWithSafariVC(venue.website!)
         case venueTwitterRow:
             // open twitter in safari
-            let twitterURL = "https://twitter.com/" + (venue?.twitter)!
+            let twitterURL = "https://twitter.com/" + venue.twitter!
             openWithSafariVC(twitterURL)
         case venueAddressRow:
             // open apple maps
             let regionDistance: CLLocationDistance = 1000
-            let coordinates = CLLocationCoordinate2DMake((venue?.latitude)!, (venue?.longitude)!)
+            let coordinates = CLLocationCoordinate2DMake(venue.latitude!, venue.longitude!)
             let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
             let options = [
                 MKLaunchOptionsMapCenterKey: NSValue(MKCoordinate: regionSpan.center),
@@ -160,7 +161,7 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
             ]
             let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
             let mapItem = MKMapItem(placemark: placemark)
-            mapItem.name = venue?.name
+            mapItem.name = venue.name
             mapItem.openInMapsWithLaunchOptions(options)
         default:
             break
