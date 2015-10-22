@@ -24,9 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WCSessionDelegate {
 
         // watch kit connectivity
         if (WCSession.isSupported()) {
-            let watchSession = WCSession.defaultSession()
-            watchSession.delegate = self
-            watchSession.activateSession()
+            let session = WCSession.defaultSession()
+            session.delegate = self
+            session.activateSession()
         }
         
         return true

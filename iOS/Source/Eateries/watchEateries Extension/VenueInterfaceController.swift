@@ -10,5 +10,14 @@ import Foundation
 import WatchKit
 
 class VenueInterfaceController: WKInterfaceController {
-
+    var venue: Venue!
+    
+    override func awakeWithContext(context: AnyObject?) {
+        super.awakeWithContext(context)
+        
+        if let venue = context as? Venue {
+            self.venue = venue
+            setTitle(venue.name)
+        }
+    }
 }

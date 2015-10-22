@@ -12,7 +12,7 @@ import Foundation
 class InterfaceController: WKInterfaceController {
 
     @IBOutlet weak var collectionsTable: WKInterfaceTable!
-    var collections = ["Chicago", "Sushi", "Pizza"]
+    var collections = [Venue]()
     
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
@@ -21,8 +21,7 @@ class InterfaceController: WKInterfaceController {
         reloadTable()
     }
     
-    override func contextForSegueWithIdentifier(segueIdentifier: String,
-        inTable table: WKInterfaceTable, rowIndex: Int) -> AnyObject? {
+    override func contextForSegueWithIdentifier(segueIdentifier: String, inTable table: WKInterfaceTable, rowIndex: Int) -> AnyObject? {
             if segueIdentifier == "CollectionDetails" {
                 let name = collections[rowIndex]
                 
@@ -40,9 +39,9 @@ class InterfaceController: WKInterfaceController {
         }
         
         var index = 0
-        for name in collections {
+        for venue in collections {
             if let row = collectionsTable.rowControllerAtIndex(index) as? CollectionRow {
-                row.collectionNameLabel.setText(name)
+                row.collectionNameLabel.setText(venue.name)
             }
             
             index++

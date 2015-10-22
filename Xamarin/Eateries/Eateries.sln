@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Eateries", "Eateries\Eateries.shproj", "{6F5BF9A3-E1E7-4C7B-9A06-08DDC469EFA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eateries.Droid", "Droid\Eateries.Droid.csproj", "{299150F1-61DC-4E03-8230-C3D84ACF8A9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eateries.UITests", "UITests\Eateries.UITests.csproj", "{90D226A9-1A9E-4769-B8B2-23DA3F38F100}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{299150F1-61DC-4E03-8230-C3D84ACF8A9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{299150F1-61DC-4E03-8230-C3D84ACF8A9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{299150F1-61DC-4E03-8230-C3D84ACF8A9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{299150F1-61DC-4E03-8230-C3D84ACF8A9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90D226A9-1A9E-4769-B8B2-23DA3F38F100}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90D226A9-1A9E-4769-B8B2-23DA3F38F100}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90D226A9-1A9E-4769-B8B2-23DA3F38F100}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90D226A9-1A9E-4769-B8B2-23DA3F38F100}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

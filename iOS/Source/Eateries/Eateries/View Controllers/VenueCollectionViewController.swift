@@ -9,7 +9,7 @@
 import UIKit
 
 class VenueCollectionViewController: UITableViewController, VenueAddedToCollectionProtocol {
-
+    
     var venueCollection : VenueCollection!
     var allPlacesCollection : VenueCollection!
     var favoritesCollection : VenueCollection!

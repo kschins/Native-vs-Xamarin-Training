@@ -1,0 +1,8 @@
+Random Notes and Observations
+
++ Navigation is so much easier since only an implementation file is needed. No more .h and .m files.
++ Not ending every line with a ; is a tough habit to break.
++ Like C#, not needing to use self within a class to call functions just makes things harder to read.
++ Understanding Swift Optionals is a must (http://www.touch-code-magazine.com/swift-optionals-use-let/) although it’s easy to let Xcode handle them for you most of the time. Learn them instead.
++ Optional binding to parse JSON is really neat. It’s very easy to use and learn as well. It also saves a ton of time and code.
++ No more generated accessors for Core Data. You have to write your own extension for each NSManagedObject to handle many-to-many relationships.
