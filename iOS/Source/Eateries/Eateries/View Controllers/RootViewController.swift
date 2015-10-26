@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import WatchConnectivity
 
 class RootViewController: UITableViewController, NewVenueCollectionProtocol {
 
@@ -21,7 +22,6 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
     let nearbyRow = 2
     
     // vars
-    var staticCollections = [VenueCollection]()
     var venueCollections = [VenueCollection]()
     
     override func viewDidLoad() {
@@ -73,9 +73,35 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
         } catch {
             print("Failed to save")
         }
+        
+        // send collections to watch app
+        sendVenueCollectionsToWatch()
     }
+    
+    // MARK: - WatchKit Connectivity
 
+    private func sendVenueCollectionsToWatch() {
+        if WCSession.isSupported() {
+            let session = WCSession.defaultSession()
+            
+            //if session.watchAppInstalled {
+                do {
+                    var collections = [[String : AnyObject]]()
+                    
+                    for collection in venueCollections {
+                        collections.append(collection.venueCollectionToDictionary())
+                    }
+                    
+                    try session.updateApplicationContext(["collections" : collections])
+                } catch {
+                    print("Failed to send venue collections to watch")
+                }
+            //}
+        }
+    }
+    
     // MARK: - Table view data source
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // Return the number of sections.
         return numberOfSections

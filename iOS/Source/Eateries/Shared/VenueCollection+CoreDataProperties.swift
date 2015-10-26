@@ -44,4 +44,20 @@ extension VenueCollection {
         let venues = self.mutableSetValueForKey("venues")
         venues.removeAllObjects()
     }
+    
+    func venueCollectionToDictionary() -> [String : AnyObject] {
+        var venueDictionaries = [[String : AnyObject]]()
+        let allVenues = self.venues?.allObjects as? [Venue]
+
+        for venue in allVenues! {
+            venueDictionaries.append(venue.venueToDictionary())
+        }
+        
+        let venueCollection: [String : AnyObject] = [
+            "name" : name!,
+            "venues" : venueDictionaries
+        ]
+        
+        return venueCollection
+    }
 }

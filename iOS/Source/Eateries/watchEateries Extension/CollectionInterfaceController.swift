@@ -12,24 +12,44 @@ import WatchKit
 class CollectionInterfaceController: WKInterfaceController {
     @IBOutlet weak var venuesTable: WKInterfaceTable!
     
-    var collection: VenueCollection!
+    var collection: FSVenueCollection!
     
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         
-        if let collection = context as? VenueCollection {
+        if let collection = context as? FSVenueCollection {
             self.collection = collection
             setTitle(collection.name)
         }
+        
+        // reload
+        reloadTable()
     }
     
     override func contextForSegueWithIdentifier(segueIdentifier: String, inTable table: WKInterfaceTable, rowIndex: Int) -> AnyObject? {
             if segueIdentifier == "VenueDetails" {
-                let venue = collection.venues?.allObjects[rowIndex]
+                let venue = collection.venues[rowIndex]
  
                 return venue
             }
             
             return nil
+    }
+    
+    // MARK: - Displaying Data
+    
+    func reloadTable() {
+        if venuesTable.numberOfRows != collection.venues.count {
+            venuesTable.setNumberOfRows(collection.venues.count, withRowType: "CollectionRow")
+        }
+        
+        var index = 0
+        for venue in collection.venues {
+            if let row = venuesTable.rowControllerAtIndex(index) as? CollectionRow {
+                row.collectionNameLabel.setText(venue.name)
+            }
+            
+            index++
+        }
     }
 }

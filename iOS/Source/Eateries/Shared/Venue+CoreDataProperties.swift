@@ -34,4 +34,20 @@ extension Venue {
     class func insertNewObject(moc: NSManagedObjectContext) -> Venue {
         return NSEntityDescription.insertNewObjectForEntityForName(Venue.entityName(), inManagedObjectContext: moc) as! Venue
     }
+    
+    func venueToDictionary() -> [String : AnyObject] {
+        let venue: [String : AnyObject] = [
+            "venueID" : venueID!,
+            "name" : name!,
+            "twitter" : twitter!,
+            "website" : website!,
+            "telephone" : telephone!,
+            "price" : price!,
+            "mainVenueCollectionName" : mainVenueCollectionName!,
+            "favorite" : favorite!.boolValue,
+            "address" : address!.venueAddressToDictionary()
+        ]
+        
+        return venue
+    }
 }

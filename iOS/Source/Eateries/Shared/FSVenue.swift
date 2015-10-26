@@ -11,14 +11,14 @@ import CoreData
 import UIKit
 
 class FSVenue {
-    let venueID : String
-    let name : String
-    let mainVenueCollectionName : String
+    var venueID : String!
+    var name : String!
+    var mainVenueCollectionName : String!
     var website : String?
     var telephone : String?
     var twitter : String?
     var price : String?
-    let favorite : Bool
+    var favorite : Bool!
     
     // address
     var hasAddress = true
@@ -32,6 +32,17 @@ class FSVenue {
     
     // valid venue
     var validVenue = true
+    
+    init() {
+        self.venueID = ""
+        self.name = ""
+        self.mainVenueCollectionName = ""
+        self.website = ""
+        self.telephone = ""
+        self.twitter = ""
+        self.price = ""
+        self.favorite = false
+    }
     
     init(venue : [String : AnyObject]) {
         // id
@@ -160,6 +171,36 @@ class FSVenue {
         }
         
         return venue
+    }
+    
+    func venueFromDictionary(dictionary: [String : AnyObject]) {
+        self.name = dictionary["name"] as? String
+        self.venueID = dictionary["venueID"] as? String
+        self.telephone = dictionary["telephone"] as? String
+        self.website = dictionary["website"] as? String
+        self.twitter = dictionary["twitter"] as? String
+        self.price = dictionary["price"] as? String
+        self.favorite = dictionary["favorite"] as? Bool
+        self.mainVenueCollectionName = dictionary["mainVenueCollectionName"] as? String
+        
+        // address
+        if let address = dictionary["address"] as? [String : AnyObject] {
+            self.address = address["street"] as? String
+            self.city = address["city"] as? String
+            self.state = address["state"] as? String
+            self.country = address["country"] as? String
+            self.postalCode = address["postalCode"] as? String
+            self.latitude = address["latitude"] as? Double
+            self.longitude = address["longitude"] as? Double
+        } else {
+            self.address = ""
+            self.city = ""
+            self.state = ""
+            self.country = ""
+            self.postalCode = ""
+            self.latitude = 0.0
+            self.longitude = 0.0
+        }
     }
     
     func strippedVenueTelephone() -> String {

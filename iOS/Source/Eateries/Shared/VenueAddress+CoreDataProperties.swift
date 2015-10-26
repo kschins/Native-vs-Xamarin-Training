@@ -33,4 +33,18 @@ extension VenueAddress {
     class func insertNewObject(moc: NSManagedObjectContext) -> VenueAddress {
         return NSEntityDescription.insertNewObjectForEntityForName(VenueAddress.entityName(), inManagedObjectContext: moc) as! VenueAddress
     }
+    
+    func venueAddressToDictionary() -> [String : AnyObject] {
+        let venueAddress: [String : AnyObject] = [
+            "city" : city!,
+            "country" : country!,
+            "postalCode" : postalCode!,
+            "state" : state!,
+            "street" : street!,
+            "latitude" : latitude!.doubleValue,
+            "longitude" : longitude!.doubleValue
+        ]
+        
+        return venueAddress
+    }
 }

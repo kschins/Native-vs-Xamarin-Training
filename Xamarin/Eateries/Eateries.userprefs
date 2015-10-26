@@ -1,6 +1,10 @@
 ﻿<Properties StartupItem="Droid/Eateries.Droid.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.SelectDevice" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Eateries/Eateries.cs">
+    <Files>
+      <File FileName="Eateries/Eateries.cs" Line="15" Column="7" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
