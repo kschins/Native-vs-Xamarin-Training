@@ -213,10 +213,17 @@ class FSVenue {
     }
     
     func displayAddress() -> String {
-        var displayAddress: String = address! + "\n"
-        displayAddress += city! + ", " + state! + " " + postalCode!
-        
-        return displayAddress
+        if let street = address {
+            var displayAddress: String = street + "\n"
+            
+            if let theCity = city, theState = state, theZip = postalCode {
+                displayAddress += theCity + ", " + theState + " " + theZip
+            }
+            
+            return displayAddress
+        } else {
+            return ""
+        }
     }
     
     func displayPrice() -> NSAttributedString {

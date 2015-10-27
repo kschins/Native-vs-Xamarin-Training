@@ -36,17 +36,32 @@ extension Venue {
     }
     
     func venueToDictionary() -> [String : AnyObject] {
-        let venue: [String : AnyObject] = [
+        var venue: [String : AnyObject] = [
             "venueID" : venueID!,
             "name" : name!,
-            "twitter" : twitter!,
-            "website" : website!,
-            "telephone" : telephone!,
-            "price" : price!,
             "mainVenueCollectionName" : mainVenueCollectionName!,
-            "favorite" : favorite!.boolValue,
-            "address" : address!.venueAddressToDictionary()
+            "favorite" : favorite!.boolValue
         ]
+        
+        if let twt = twitter {
+            venue.updateValue(twt, forKey: "twitter")
+        }
+        
+        if let site = website {
+            venue.updateValue(site, forKey: "website")
+        }
+        
+        if let phone = telephone {
+            venue.updateValue(phone, forKey: "telephone")
+        }
+        
+        if let money = price {
+            venue.updateValue(money, forKey: "price")
+        }
+        
+        if let street = address {
+            venue.updateValue(street.venueAddressToDictionary(), forKey: "address")
+        }
         
         return venue
     }

@@ -84,7 +84,7 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
         if WCSession.isSupported() {
             let session = WCSession.defaultSession()
             
-            //if session.watchAppInstalled {
+            if session.watchAppInstalled {
                 do {
                     var collections = [[String : AnyObject]]()
                     
@@ -96,7 +96,7 @@ class RootViewController: UITableViewController, NewVenueCollectionProtocol {
                 } catch {
                     print("Failed to send venue collections to watch")
                 }
-            //}
+            }
         }
     }
     

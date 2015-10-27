@@ -75,6 +75,11 @@
                         <label width="136" alignment="left" text="Website" id="3Nr-rQ-xLM"/>
                         <label width="132.5" alignment="left" text="Address" numberOfLines="2" id="Tfo-gt-c6m"/>
                         <map height="100" alignment="left" id="ccx-Cd-mJK"/>
+                        <slider width="1" alignment="left" value="1" maximum="3" steps="3" id="WAz-Nb-Rp8">
+                            <connections>
+                                <action selector="changeMapRegion:" destination="y0b-Mo-p7R" id="zlH-XZ-pFH"/>
+                            </connections>
+                        </slider>
                     </items>
                     <connections>
                         <outlet property="venueAddressLabel" destination="Tfo-gt-c6m" id="2Yr-6K-nPZ"/>
@@ -82,6 +87,7 @@
                         <outlet property="venueNameLabel" destination="pub-f8-DDc" id="Dgm-8b-Z66"/>
                         <outlet property="venuePhoneLabel" destination="gFn-LM-6xF" id="Zzr-t4-aus"/>
                         <outlet property="venueWebsiteLabel" destination="3Nr-rQ-xLM" id="cZW-p7-pKC"/>
+                        <outlet property="zoomSlider" destination="WAz-Nb-Rp8" id="Qth-ZH-gd0"/>
                     </connections>
                 </controller>
             </objects>
