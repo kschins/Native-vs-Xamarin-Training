@@ -136,6 +136,7 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
                 self.venueCollection.removeVenue(venue)
                 self.allPlacesCollection.removeVenue(venue)
                 self.favoritesCollection.removeVenue(venue)
+                self.venues.removeAtIndex(indexPath.row)
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             }
             
