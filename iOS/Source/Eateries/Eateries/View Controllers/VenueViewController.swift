@@ -141,28 +141,36 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
         switch (indexPath.row) {
         case venuePhoneRow:
             // call - if number is valid
-            let phone = venue.strippedVenueTelephone()
-            UIApplication.sharedApplication().openURL(NSURL(string: "tel://" + phone)!)
+            if let telephone = venue.telephone {
+                let phone = venue.strippedVenueTelephone()
+                UIApplication.sharedApplication().openURL(NSURL(string: "tel://" + phone)!)
+            }
         case venueWebsiteRow:
             // open safari
-            openWithSafariVC(venue.website!)
+            if let url = venue.website {
+                openWithSafariVC(url)
+            }
         case venueTwitterRow:
             // open twitter in safari
-            let twitterURL = "https://twitter.com/" + venue.twitter!
-            openWithSafariVC(twitterURL)
+            if let url = venue.twitter {
+                let twitterURL = "https://twitter.com/" + url
+                openWithSafariVC(twitterURL)
+            }
         case venueAddressRow:
             // open apple maps
-            let regionDistance: CLLocationDistance = 1000
-            let coordinates = CLLocationCoordinate2DMake(venue.latitude!, venue.longitude!)
-            let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
-            let options = [
-                MKLaunchOptionsMapCenterKey: NSValue(MKCoordinate: regionSpan.center),
-                MKLaunchOptionsMapSpanKey: NSValue(MKCoordinateSpan: regionSpan.span)
-            ]
-            let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
-            let mapItem = MKMapItem(placemark: placemark)
-            mapItem.name = venue.name
-            mapItem.openInMapsWithLaunchOptions(options)
+            if let lat = venue.latitude, long = venue.longitude {
+                let regionDistance: CLLocationDistance = 1000
+                let coordinates = CLLocationCoordinate2DMake(lat, long)
+                let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
+                let options = [
+                    MKLaunchOptionsMapCenterKey: NSValue(MKCoordinate: regionSpan.center),
+                    MKLaunchOptionsMapSpanKey: NSValue(MKCoordinateSpan: regionSpan.span)
+                ]
+                let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+                let mapItem = MKMapItem(placemark: placemark)
+                mapItem.name = venue.name
+                mapItem.openInMapsWithLaunchOptions(options)
+            }
         default:
             break
         }

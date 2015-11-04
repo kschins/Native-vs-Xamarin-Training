@@ -66,7 +66,6 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 
-    // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         if (allPlacesCollection == venueCollection) {
             return false
@@ -145,6 +144,7 @@ class VenueCollectionViewController: UITableViewController, VenueAddedToCollecti
     }
 
     // MARK: - Navigation
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "Add Venue Segue" {
             let navViewController = segue.destinationViewController as! UINavigationController
