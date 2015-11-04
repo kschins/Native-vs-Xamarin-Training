@@ -141,7 +141,7 @@ class VenueViewController : UITableViewController, SFSafariViewControllerDelegat
         switch (indexPath.row) {
         case venuePhoneRow:
             // call - if number is valid
-            if let telephone = venue.telephone {
+            if venue.telephone != nil {
                 let phone = venue.strippedVenueTelephone()
                 UIApplication.sharedApplication().openURL(NSURL(string: "tel://" + phone)!)
             }
